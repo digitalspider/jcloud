@@ -30,9 +30,6 @@ public class User extends BaseBean {
 	)
 	protected Set<Role> roles;
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
-	protected List<Server> serverList;
-
 	public String getFullName() {
 		return firstName + " " + lastName;
 	}
@@ -80,13 +77,5 @@ public class User extends BaseBean {
 
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
-	}
-
-	public List<Server> getServerList() {
-		return serverList;
-	}
-
-	public void setServerList(List<Server> serverList) {
-		this.serverList = serverList;
 	}
 }

@@ -19,6 +19,7 @@
 		<module>jcutil</module>
 		<module>jcbatch</module>
 		<module>jcmodel</module>
+		<module>jcmodelweb</module>
 	</modules>
 	
 	<organization>

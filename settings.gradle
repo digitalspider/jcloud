@@ -1,1 +1,2 @@
-include 'jcutil', 'jcmodel', 'jcbatch', 'website'
+rootProject.name = 'jcloud'
+include 'jcutil', 'jcmodel', 'jcmodelweb', 'jcbatch'

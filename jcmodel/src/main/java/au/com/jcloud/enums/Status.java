@@ -12,7 +12,7 @@ public enum Status {
 
 	private int value;
 
-	public int getValue() {
+	public int value() {
 		return value;
 	}
 

@@ -20,6 +20,7 @@ repositories {
 
 dependencies {
 	compile group: 'log4j', name: 'log4j', version:'1.2.17'
+	compile group: 'au.com.jcloud', name: 'jcmodel', version:'1.0-SNAPSHOT'
 	compile group: 'org.apache.commons', name: 'commons-lang3', version:'3.4'
 	compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.1'
 	compile group: 'commons-fileupload', name: 'commons-fileupload', version:'1.3.2'
