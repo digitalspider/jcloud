@@ -1,0 +1,19 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+
+group = 'au.com.jcloud'
+version = '1.0-SNAPSHOT'
+
+description = """jcloud ALL"""
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+repositories {
+     maven { url "https://maven.atlassian.com/repository/public" }
+     maven { url "http://repository.codehaus.org/" }
+     mavenCentral()
+     mavenLocal()
+}
