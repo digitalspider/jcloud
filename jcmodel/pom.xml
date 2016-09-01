@@ -8,14 +8,6 @@
 	<name>jcloud model</name>
 	<url>http://jcloud.com.au</url>
 
-	<!--
-	<parent>
-		<groupId>au.com.jcloud</groupId>
-		<artifactId>all</artifactId>
-		<version>1.0-SNAPSHOT</version>
-	</parent>
-	-->
-
 	<organization>
 		<name>JCloud</name>
 		<url>http://www.jcloud.com.au</url>
@@ -32,18 +24,11 @@
 	</developers>
 
     <properties>
-    	<jcloud.version>1.0-SNAPSHOT</jcloud.version>
         <java.version>1.7</java.version>
-	    <spring.version>4.3.1.RELEASE</spring.version>
-	    <ebean.version>8.1.1</ebean.version>
-	    <jackson.xml.version>2.0.1</jackson.xml.version>
-        <ebeanorm-enhancement.plugin.args>debug=1</ebeanorm-enhancement.plugin.args>
+        <ebean.version>8.1.1</ebean.version>
     </properties>
 	
     <build>
-    	<!--
-        <finalName>jcmodel</finalName>
-        -->
         <plugins>
         	<!-- 
            <plugin>
@@ -78,49 +63,10 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
-            <!-- 
-            <plugin>
-                <groupId>org.mortbay.jetty</groupId>
-                <artifactId>maven-jetty-plugin</artifactId>
-                <configuration>
-                    <connectors>
-                        <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
-                            <port>8888</port>
-                        </connector>
-                    </connectors>
-                </configuration>
-            </plugin>
-             -->
-            <plugin>
-                <groupId>org.avaje.ebean</groupId>
-                <artifactId>ebean-maven-plugin</artifactId>
-                <version>${ebean.version}</version>
-                <executions>
-                    <execution>
-                        <id>test</id>
-                        <phase>process-test-classes</phase>
-                        <configuration>
-                            <classSource>target/classes</classSource>
-                            <transformArgs>debug=1</transformArgs>
-                            <packages>au.com.jcloud.model.**</packages>
-                        </configuration>
-                        <goals>
-                            <goal>enhance</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
 
-	<dependencies>	
-		<!-- GSon library -->
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-			<version>2.6.2</version>
-		</dependency>
-	
+	<dependencies>		
 		<!-- Testing -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -140,28 +86,23 @@
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>1.2.17</version>
+			<optional>true</optional>
 		</dependency>
+
+		<!-- ebean ORM -->
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>1.7.21</version>
+			<groupId>org.avaje.ebeanorm</groupId>
+			<artifactId>avaje-ebeanorm</artifactId>
+			<version>${ebean.version}</version>
+			<optional>true</optional>
 		</dependency>
-	
-		<!-- Apache Commons -->
+		
+		<!-- Javax persistence API -->		
 		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>3.4</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-collections4</artifactId>
-			<version>4.1</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-			<version>2.5</version>
+			<groupId>javax.persistence</groupId>
+			<artifactId>persistence-api</artifactId>
+			<version>1.0.2</version>
+			<optional>true</optional>
 		</dependency>
   </dependencies>
 

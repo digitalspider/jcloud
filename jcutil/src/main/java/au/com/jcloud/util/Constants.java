@@ -3,8 +3,6 @@ package au.com.jcloud.util;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
-import au.com.jcloud.model.User;
-
 /**
  * Created by david on 26/05/16.
  */
@@ -53,16 +51,4 @@ public class Constants {
 	public static final String SESSION_NONCE_UID_USERACCOUNT = "";
 
 	public static final String REQUEST_DEVICE_TYPE = "deviceType";
-
-	public static final User systemUser;
-
-	static {
-		systemUser = new User();
-		systemUser.setId(1L);
-		systemUser.setName("SYSTEM");
-	}
-
-	public static User getSystemUser() {
-		return systemUser;
-	}
 }

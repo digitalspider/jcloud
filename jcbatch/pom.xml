@@ -180,12 +180,6 @@
 			<artifactId>avaje-ebeanorm-querybean</artifactId>
 			<version>7.15.1</version>
 		</dependency>
-		<dependency> <!-- java annotation processor to generate query beans -->
-			<groupId>org.avaje.ebeanorm</groupId>
-			<artifactId>querybean-generator</artifactId>
-			<version>2.3.1</version>
-			<scope>provided</scope>
-		</dependency>
 		
 		<!-- Simple Java Mail -->
 		<dependency>

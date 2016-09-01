@@ -12,8 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
-import au.com.jcloud.actionbean.JCActionBean;
-
 /**
  * Created by david.vittor on 17/08/16.
  */
@@ -118,12 +116,11 @@ public class HttpUtil {
 		}
 	}
 
-	public static void validateRequestNonce(final HttpServletRequest request, JCActionBean actionBean, String nonceName)
+	public static void validateRequestNonce(final HttpServletRequest request, String requestId, String nonceName)
 			throws Exception {
-		String requestIdFromForm = actionBean.getRequestId();
 		String requestIdFromSession = (String) request.getSession().getAttribute(nonceName);
-		if (requestIdFromForm == null || requestIdFromSession == null
-				|| !requestIdFromForm.equals(requestIdFromSession)) {
+		if (requestId == null || requestIdFromSession == null
+				|| !requestId.equals(requestIdFromSession)) {
 			throw new Exception("Request cannot be verified!");
 		}
 	}
