@@ -8,7 +8,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "link")
-public class Link extends BaseBean {
+public class Link extends BaseBeanWithName {
 	protected String url;
 	protected int clickCount;
 

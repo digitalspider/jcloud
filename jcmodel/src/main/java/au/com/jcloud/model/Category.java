@@ -8,6 +8,6 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "category")
-public class Category extends BaseBean {
+public class Category extends BaseBeanWithName {
 
 }

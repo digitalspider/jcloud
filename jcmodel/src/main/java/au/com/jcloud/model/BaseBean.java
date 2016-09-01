@@ -12,24 +12,15 @@ import com.avaje.ebean.annotation.UpdatedTimestamp;
  */
 @MappedSuperclass
 public class BaseBean extends IdBean {
-	protected String name;
 	@CreatedTimestamp
 	protected Date cdate;
 	@UpdatedTimestamp
 	protected Date mdate;
-	protected String status;
+	protected int status;
 
 	@Override
 	public String toString() {
-		return super.toString() + " name=" + name + " status=" + status;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
+		return super.toString() + " status=" + status;
 	}
 
 	public Date getCdate() {
@@ -48,11 +39,11 @@ public class BaseBean extends IdBean {
 		this.mdate = mdate;
 	}
 
-	public String getStatus() {
+	public int getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 }

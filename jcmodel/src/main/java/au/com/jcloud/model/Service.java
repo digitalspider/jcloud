@@ -8,7 +8,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "service")
-public class Service extends BaseBean {
+public class Service extends BaseBeanWithName {
 	protected String version;
 	protected Server server;
 	protected String alias;

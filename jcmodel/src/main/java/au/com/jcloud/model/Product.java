@@ -10,7 +10,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "product")
-public class Product extends BaseBean {
+public class Product extends BaseBeanWithName {
 	protected Category category;
 	protected BigDecimal costPrice;
 	protected BigDecimal listPrice;

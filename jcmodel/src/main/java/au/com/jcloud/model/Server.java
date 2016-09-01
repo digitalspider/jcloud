@@ -13,7 +13,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "server")
-public class Server extends BaseBean {
+public class Server extends BaseBeanWithName {
 	protected String lxdId;
 	protected String ip;
 	protected String alias;

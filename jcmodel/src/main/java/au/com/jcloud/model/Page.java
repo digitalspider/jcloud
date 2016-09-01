@@ -15,10 +15,8 @@ public class Page extends BaseBean {
 	protected String description;
 	protected String tags;
 	protected String type;
-	@ManyToOne(optional = false, cascade = CascadeType.ALL)
-	@JoinColumn(name = "author_id", referencedColumnName = "id")
-	protected User authorId;
-	protected Page parentId;
+	protected String author;
+	protected Page parentPage;
 	protected String title;
 	protected String content;
 	protected String url;
@@ -47,20 +45,20 @@ public class Page extends BaseBean {
 		this.type = type;
 	}
 
-	public User getAuthorId() {
-		return authorId;
+	public String getAuthor() {
+		return author;
 	}
 
-	public void setAuthorId(User authorId) {
-		this.authorId = authorId;
+	public void setAuthor(String author) {
+		this.author = author;
 	}
 
-	public Page getParentId() {
-		return parentId;
+	public Page getParentPage() {
+		return parentPage;
 	}
 
-	public void setParentId(Page parentId) {
-		this.parentId = parentId;
+	public void setParentPage(Page parentPage) {
+		this.parentPage = parentPage;
 	}
 
 	public String getTitle() {
