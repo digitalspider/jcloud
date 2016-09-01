@@ -1,21 +1,18 @@
-package au.com.jcloud.util;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+package au.com.jcloud.batch;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-
-import com.sun.syndication.feed.synd.SyndEntry;
-import com.sun.syndication.feed.synd.SyndFeed;
-import com.sun.syndication.io.SyndFeedInput;
-import com.sun.syndication.io.XmlReader;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.net.URLConnection;
 import java.util.zip.GZIPInputStream;
+
+import org.apache.log4j.Logger;
+import org.xml.sax.InputSource;
+
+import com.sun.syndication.feed.synd.SyndFeed;
+import com.sun.syndication.io.FeedException;
+import com.sun.syndication.io.SyndFeedInput;
 
 public class FeedReaderBatch {
 
@@ -38,6 +35,8 @@ http://blog.booktopia.com.au/category/top-stories/feed/
 	Tag = http://blog.booktopia.com.au/tag/caroline-baum/
 	Category = http://blog.booktopia.com.au/category/book-recommendations/
 	*/
+
+	private static final Logger LOG = Logger.getLogger(FeedReaderBatch.class);
 
 	public static void main(String[] args) {
 		try {
