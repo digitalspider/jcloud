@@ -1,6 +1,9 @@
 package au.com.jcloud.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 /**
@@ -8,5 +11,30 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "role")
-public class Role extends BaseRole {
+public class Role extends IdBean {
+	private String name;
+
+	@ManyToMany(mappedBy = "roles")
+	protected List<User> users;
+
+	@Override
+	public String toString() {
+		return super.toString() + " name=" + name;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setBaseUsers(List<User> users) {
+		this.users = users;
+	}
 }
