@@ -16,7 +16,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "user")
-public class WebUser extends User {
+public class User extends BaseUser {
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
 	protected List<Server> serverList;

@@ -4,18 +4,18 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.Table;
 
 /**
  * Created by david.vittor on 24/08/16.
  */
-@Entity
-@Table(name = "role")
-public class Role extends IdBean {
+@MappedSuperclass
+public class BaseRole extends IdBean {
 	private String name;
 
 	@ManyToMany(mappedBy = "roles")
-	protected List<User> users;
+	protected List<BaseUser> users;
 
 	@Override
 	public String toString() {
@@ -30,11 +30,11 @@ public class Role extends IdBean {
 		this.name = name;
 	}
 
-	public List<User> getUsers() {
+	public List<BaseUser> getUsers() {
 		return users;
 	}
 
-	public void setUsers(List<User> users) {
+	public void setBaseUsers(List<BaseUser> users) {
 		this.users = users;
 	}
 }

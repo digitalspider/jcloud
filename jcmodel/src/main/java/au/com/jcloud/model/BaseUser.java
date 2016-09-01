@@ -1,22 +1,17 @@
 package au.com.jcloud.model;
 
-import java.util.List;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.MappedSuperclass;
 
 /**
  * Created by david.vittor on 5/08/16.
  */
-@Entity
-@Table(name = "user")
-public class User extends BaseBean {
+@MappedSuperclass
+public class BaseUser extends BaseBean {
 	protected String username;
 	protected String email;
 	protected String password;
@@ -29,7 +24,7 @@ public class User extends BaseBean {
 			joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
 			inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
 	)
-	protected Set<Role> roles;
+	protected Set<BaseRole> roles;
 
 	public String getFullName() {
 		return firstName + " " + lastName;
@@ -80,11 +75,11 @@ public class User extends BaseBean {
 		this.lastName = lastName;
 	}
 
-	public Set<Role> getRoles() {
+	public Set<BaseRole> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(Set<Role> roles) {
+	public void setRoles(Set<BaseRole> roles) {
 		this.roles = roles;
 	}
 }
