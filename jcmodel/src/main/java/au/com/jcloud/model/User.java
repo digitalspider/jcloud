@@ -17,6 +17,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "user")
 public class User extends BaseBean {
+	protected String username;
 	protected String email;
 	protected String password;
 	protected String firstName;
@@ -36,7 +37,15 @@ public class User extends BaseBean {
 
 	@Override
 	public String toString() {
-		return super.toString() + " email=" + email + " firstName=" + firstName + " lastName=" + lastName;
+		return super.toString() + " username="+username+" email=" + email + " firstName=" + firstName + " lastName=" + lastName;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getEmail() {
