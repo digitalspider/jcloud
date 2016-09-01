@@ -91,25 +91,6 @@
                 </configuration>
             </plugin>
              -->
-            <plugin>
-                <groupId>org.avaje.ebean</groupId>
-                <artifactId>ebean-maven-plugin</artifactId>
-                <version>${ebean.version}</version>
-                <executions>
-                    <execution>
-                        <id>test</id>
-                        <phase>process-test-classes</phase>
-                        <configuration>
-                            <classSource>target/classes</classSource>
-                            <transformArgs>debug=1</transformArgs>
-                            <packages>au.com.jcloud.model.**</packages>
-                        </configuration>
-                        <goals>
-                            <goal>enhance</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
 
@@ -123,11 +104,6 @@
 		<dependency>
 			<groupId>au.com.jcloud</groupId>
 			<artifactId>model</artifactId>
-			<version>${jcloud.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>au.com.jcloud</groupId>
-			<artifactId>dao</artifactId>
 			<version>${jcloud.version}</version>
 		</dependency>
 		

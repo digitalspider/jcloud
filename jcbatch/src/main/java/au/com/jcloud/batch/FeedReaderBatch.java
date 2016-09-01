@@ -3,9 +3,21 @@ package au.com.jcloud.util;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
-import au.com.jcloud.model.User;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 
-public class Constants {
+import com.sun.syndication.feed.synd.SyndEntry;
+import com.sun.syndication.feed.synd.SyndFeed;
+import com.sun.syndication.io.SyndFeedInput;
+import com.sun.syndication.io.XmlReader;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.zip.GZIPInputStream;
+
+public class FeedReaderBatch {
 
 	/*
 	view-source:http://blog.booktopia.com.au/feed/
@@ -29,7 +41,7 @@ http://blog.booktopia.com.au/category/top-stories/feed/
 
 	public static void main(String[] args) {
 		try {
-			SlottingResource r = new SlottingResource();
+			FeedReaderBatch r = new FeedReaderBatch();
 			SyndFeed feed = r.getSyndFeedForUrl("http://blog.booktopia.com.au/category/top-stories/feed/");
 			System.out.println("feed=" + feed);
 			System.out.println("feed.entries.size=" + feed.getEntries().size());
