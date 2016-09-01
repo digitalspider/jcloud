@@ -17,25 +17,22 @@ import org.apache.log4j.Logger;
  */
 public class HttpUtil {
 	private static final Logger LOG = Logger.getLogger(HttpUtil.class);
-	private static Pattern ipFilterPattern;
 
-	static {
-		String ipFilter = System.getProperty(Constants.ENV_IP_FILTER, "");
-		if (StringUtils.isNotBlank(ipFilter)) {
-			ipFilterPattern = Pattern.compile(ipFilter);
-		}
-	}
-
-	public static boolean isIgnoreIPAddress(String ipAddress) {
+	public static boolean matchesPattern(Pattern pattern, String input) {
 		try {
-			if (ipFilterPattern != null) {
-				Matcher linkMat = ipFilterPattern.matcher(ipAddress);
-				return linkMat.matches();
+			if (pattern != null) {
+				Matcher matcher = pattern.matcher(input);
+				return matcher.matches();
 			}
 		} catch (Exception e) {
-			LOG.error("Error checking ip", e);
+			LOG.error(e, e);
 		}
 		return false;
+	}
+
+	public static boolean matchesRegex(String regex, String input) {
+		Pattern pattern = Pattern.compile(regex);
+		return matchesPattern(pattern, input);
 	}
 
 	public static String getDomain(final HttpServletRequest request) {
