@@ -26,6 +26,12 @@ public class Constants {
 	public static final String PATH_RESOURCES_TEST = "src/test/resources/";
 	public static final String PATH_RESOURCES_MAIN = "src/main/resources/";
 
+	public static final String FILENAME_PROPERTIES_JC = "jc.properites";
+	public static final String FILENAME_PROPERTIES_DB = "db.properites";
+	public static final String FILENAME_PROPERTIES_EMAIL = "email.properites";
+	public static final String FILENAME_PROPERTIES_EBEAN = "ebean.properites";
+	public static final String FILENAME_PROPERTIES_EBEAN_TEST = "ebean-test.properites";
+
 	public static final String HEADER_CDN_X_REAL_IP = "CDN-X-Real-IP";
 	public static final String HEADER_COUNTRY_CODE = "X-Country-Code";
 	public static final String HEADER_DEVICE_TYPE = "X-Device-Type";
