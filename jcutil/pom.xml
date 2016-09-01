@@ -8,6 +8,14 @@
 	<name>jcloud util</name>
 	<url>http://jcloud.com.au</url>
 
+	<!--
+	<parent>
+		<groupId>au.com.jcloud</groupId>
+		<artifactId>all</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+	-->
+
 	<organization>
 		<name>JCloud</name>
 		<url>http://www.jcloud.com.au</url>
@@ -24,11 +32,8 @@
 	</developers>
 
     <properties>
-        <java.version>1.8</java.version>
-	    <spring.version>4.3.1.RELEASE</spring.version>
-	    <ebean.version>8.1.1</ebean.version>
-	    <jackson.xml.version>2.0.1</jackson.xml.version>
-        <ebeanorm-enhancement.plugin.args>debug=1</ebeanorm-enhancement.plugin.args>
+    	<jcloud.version>1.0-SNAPSHOT</jcloud.version>
+        <java.version>1.7</java.version>
     </properties>
 	
     <build>
@@ -64,89 +69,20 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.5.1</version>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                     <encoding>UTF-8</encoding>
                 </configuration>
-            </plugin>
-            <!-- 
-            <plugin>
-                <groupId>org.mortbay.jetty</groupId>
-                <artifactId>maven-jetty-plugin</artifactId>
-                <configuration>
-                    <connectors>
-                        <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
-                            <port>8888</port>
-                        </connector>
-                    </connectors>
-                </configuration>
-            </plugin>
-             -->
-            <plugin>
-                <groupId>org.avaje.ebean</groupId>
-                <artifactId>ebean-maven-plugin</artifactId>
-                <version>${ebean.version}</version>
-                <executions>
-                    <execution>
-                        <id>test</id>
-                        <phase>process-test-classes</phase>
-                        <configuration>
-                            <classSource>target/classes</classSource>
-                            <transformArgs>debug=1</transformArgs>
-                            <packages>au.com.jcloud.model.**</packages>
-                        </configuration>
-                        <goals>
-                            <goal>enhance</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
 
-	<dependencies>
-		<!-- Spring Framework -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-web</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.springframework</groupId>
-		    <artifactId>spring-test</artifactId>
-		    <version>${spring.version}</version>
-		    <scope>test</scope>
-		</dependency>
-
-	
+	<dependencies>	
 		<!-- GSon library -->
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 			<version>2.6.2</version>
-		</dependency>
-
-		<!-- EBean library -->
-		<dependency>
-			<groupId>org.avaje.ebeanorm</groupId>
-			<artifactId>avaje-ebeanorm</artifactId>
-			<version>${ebean.version}</version>
-		</dependency>
-		<dependency> <!-- support for query beans -->
-			<groupId>org.avaje.ebeanorm</groupId>
-			<artifactId>avaje-ebeanorm-querybean</artifactId>
-			<version>7.15.1</version>
-		</dependency>
-		<dependency> <!-- java annotation processor to generate query beans -->
-			<groupId>org.avaje.ebeanorm</groupId>
-			<artifactId>querybean-generator</artifactId>
-			<version>2.3.1</version>
-			<scope>provided</scope>
 		</dependency>
 		
 		<!-- Simple Java Mail -->
@@ -197,21 +133,6 @@
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>2.5</version>
-		</dependency>
-
-		<!-- JLXD API
-		<dependency>
-		    <groupId>au.com.jcloud</groupId>
-		    <artifactId>jlxd</artifactId>
-		    <version>1.0-SNAPSHOT</version>
-		</dependency>
-		 -->
-	
-		<!-- Payment -->
-		<dependency>
-			<groupId>com.stripe</groupId>
-			<artifactId>stripe-java</artifactId>
-			<version>2.5.0</version>
 		</dependency>
 
 	    <!-- Database dependencies -->
