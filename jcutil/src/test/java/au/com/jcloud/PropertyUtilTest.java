@@ -21,6 +21,6 @@ public class PropertyUtilTest {
         assertNotNull(properties);
         assertTrue(properties.containsKey("override"));
         assertTrue(properties.containsKey("email.username"));
-        assertEquals("dvittor@gmail.com", properties.getProperty("email.username"));
+        assertEquals("test@gmail.com", properties.getProperty("email.username"));
     }
 }
