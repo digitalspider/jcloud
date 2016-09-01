@@ -73,7 +73,7 @@
                         <id>test</id>
                         <phase>process-test-classes</phase>
                         <configuration>
-                            <classSource>jcmodel/target/classes</classSource>
+                            <classSource>jcmodelweb/target/classes</classSource>
                             <transformArgs>debug=1</transformArgs>
                             <packages>au.com.jcloud.model.**</packages>
                         </configuration>
