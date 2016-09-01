@@ -18,7 +18,6 @@
 	<modules>
 		<module>jcutil</module>
 		<module>jcbatch</module>
-		<module>jcdao</module>
 		<module>jcmodel</module>
 	</modules>
 	
