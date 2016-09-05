@@ -9,7 +9,7 @@ import au.com.jcloud.model.Blog;
 import au.com.jcloud.model.BlogSource;
 
 public class TestDB {
-	private static final Logger LOG = Logger.getLogger(FeedReaderBatch.class);
+	private static final Logger LOG = Logger.getLogger(TestDB.class);
 
 	public static void main(String[] args) {
 		try {
