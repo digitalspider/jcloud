@@ -53,7 +53,7 @@
 		           <descriptor>assembly.xml</descriptor>
                     <archive>
                         <manifest>
-                            <mainClass>au.com.jcloud.jcframe.Generator</mainClass>
+                            <mainClass>au.com.jcloud.batch.TestDB</mainClass>
                         </manifest>
                     </archive>
                     <outputDirectory>target</outputDirectory>
@@ -69,6 +69,34 @@
 		       </executions>
 			</plugin>
 			 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.0.2</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>lib</classpathPrefix>
+							<mainClass>au.com.jcloud.batch.TestDB</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>install</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/lib</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.5.1</version>
