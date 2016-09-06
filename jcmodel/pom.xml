@@ -24,6 +24,7 @@
 	</developers>
 
     <properties>
+    	<jcloud.version>1.0-SNAPSHOT</jcloud.version>
         <java.version>1.7</java.version>
         <ebean.version>8.1.1</ebean.version>
     </properties>
@@ -85,7 +86,14 @@
         </plugins>
     </build>
 
-	<dependencies>		
+	<dependencies>
+		<!-- JCloud Dependencies -->
+		<dependency>
+			<groupId>au.com.jcloud</groupId>
+			<artifactId>jcutil</artifactId>
+			<version>${jcloud.version}</version>
+		</dependency>
+
 		<!-- Testing -->
 		<dependency>
 			<groupId>junit</groupId>
