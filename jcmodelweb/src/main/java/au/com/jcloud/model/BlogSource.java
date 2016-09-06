@@ -2,21 +2,27 @@ package au.com.jcloud.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
  * Created by david.vitor on 1/09/16.
  */
 @Entity
-@Table(name = "blogsource")
+@Table(name = "blogsource", uniqueConstraints = @UniqueConstraint(columnNames={"link"}))
 public class BlogSource extends BaseBean {
 	protected String url;
+	@Column(nullable = false)
 	protected String link;
+	@Column(nullable = false)
 	protected String title;
+	@Column(length = 512)
 	protected String description;
 	protected String author;
 	protected String type;
+	@Column(nullable = false)
 	protected Date publistedDate;
 	protected String tags;
 	protected int entries;

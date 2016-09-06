@@ -52,7 +52,7 @@
 		           <descriptor>assembly.xml</descriptor>
                     <archive>
                         <manifest>
-                            <mainClass>au.com.jcloud.batch.TestDB</mainClass>
+                            <mainClass>au.com.jcloud.batch.FeedReaderBatch</mainClass>
                         </manifest>
                     </archive>
                     <outputDirectory>target</outputDirectory>
@@ -78,7 +78,7 @@
 						<manifest>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>lib</classpathPrefix>
-							<mainClass>au.com.jcloud.batch.TestDB</mainClass>
+							<mainClass>au.com.jcloud.batch.FeedReaderBatch</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
