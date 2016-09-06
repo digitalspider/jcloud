@@ -26,11 +26,11 @@ public class Constants {
 	public static final String PATH_RESOURCES_TEST = "src/test/resources/";
 	public static final String PATH_RESOURCES_MAIN = "src/main/resources/";
 
-	public static final String FILENAME_PROPERTIES_JC = "jc.properites";
+	public static final String FILENAME_PROPERTIES_JC = "jc.properties";
 	public static final String FILENAME_PROPERTIES_DB = "db.properites";
-	public static final String FILENAME_PROPERTIES_EMAIL = "email.properites";
-	public static final String FILENAME_PROPERTIES_EBEAN = "ebean.properites";
-	public static final String FILENAME_PROPERTIES_EBEAN_TEST = "test-ebean.properites";
+	public static final String FILENAME_PROPERTIES_EMAIL = "email.properties";
+	public static final String FILENAME_PROPERTIES_EBEAN = "ebean.properties";
+	public static final String FILENAME_PROPERTIES_EBEAN_TEST = "test-ebean.properties";
 
 	public static final String HEADER_CDN_X_REAL_IP = "CDN-X-Real-IP";
 	public static final String HEADER_COUNTRY_CODE = "X-Country-Code";
@@ -38,4 +38,8 @@ public class Constants {
 	public static final String HEADER_X_FORWARDED_FOR = "x-forwarded-for";
 	public static final String HEADER_X_REAL_IP = "X-Real-IP";
 	public static final String HEADER_X_FRAME_OPTIONS = "X-FRAME-OPTIONS";
+	
+	public static final String EBEAN = "ebean";
+	public static final String EBEAN_DEFAULT = EBEAN+".default";
+	public static final String EBEAN_JNDI_DS = EBEAN+".jndi.ds";
 }
