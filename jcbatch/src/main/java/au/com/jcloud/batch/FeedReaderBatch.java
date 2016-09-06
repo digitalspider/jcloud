@@ -61,7 +61,7 @@ public class FeedReaderBatch {
 	public static void main(String[] args) {
 		try {
 			FeedReaderBatch r = new FeedReaderBatch();
-			String url = "https://therealsasha.wordpress.com/feed/";
+			String url = "http://www.mkyong.com/category/maven/feed/";
 			SyndFeed feed = r.getSyndFeedForUrl(url);
 			LOG.info("feed.url=" + url);
 			//System.out.println("feed=" + feed);
@@ -80,10 +80,10 @@ public class FeedReaderBatch {
 				}
 			}
 			for (Blog blog : blogs) {
-				if (blog.getDescription().length()>=512) {
+				if (blog.getDescription()!=null && blog.getDescription().length()>=512) {
 					blog.setDescription(blog.getDescription().substring(0,512));
 				}
-				if (blog.getContent().length()>=2048) {
+				if (blog.getContent()!=null && blog.getContent().length()>=2048) {
 					blog.setContent(blog.getContent().substring(0,2048));
 				}
 				if (source!=null) {
