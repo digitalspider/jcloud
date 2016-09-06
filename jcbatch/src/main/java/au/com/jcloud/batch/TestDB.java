@@ -2,7 +2,6 @@ package au.com.jcloud.batch;
 
 import org.apache.log4j.Logger;
 
-import com.avaje.ebean.Ebean;
 import com.avaje.ebean.EbeanServer;
 
 import au.com.jcloud.enums.Status;
@@ -28,7 +27,11 @@ public class TestDB {
 	}
 	
 	public void run() throws Exception {		
-		EbeanServer server = Ebean.getServer(SERVER_NAME);
+//		EbeanServer server = Ebean.getServer(SERVER_NAME);
+		System.out.println("run() START");
+		EbeanServer server = EBeanService.getServer(SERVER_NAME, false);
+		System.out.println("server="+server);
+		System.out.println("meta="+server.getMetaInfoManager().getMetaBeanInfoList());
 		Blog blog = server.find(Blog.class).findUnique();
 		System.out.println("blog="+blog);
 		

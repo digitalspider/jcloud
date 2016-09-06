@@ -57,6 +57,7 @@
                     </archive>
                     <outputDirectory>target</outputDirectory>
 		       </configuration>
+		       <!--
 		       <executions>
 		           <execution>
 		               <id>make-assembly</id>
@@ -66,6 +67,7 @@
 		               </goals>
 		           </execution>
 		       </executions>
+		       -->
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

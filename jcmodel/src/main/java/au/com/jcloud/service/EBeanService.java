@@ -42,7 +42,7 @@ public class EBeanService {
 	}
 	
 	public static void init(String name, boolean test) throws Exception {
-		LOG.debug("init() name="+name+" test="+test);
+		LOG.info("init() name="+name+" test="+test);
 		ServerConfig config = new ServerConfig();
 		Properties properties = null;
 		if (test) {
@@ -62,7 +62,7 @@ public class EBeanService {
 		if (StringUtils.isNotBlank(classString)) {
 			String[] classArray = classString.split(",");
 			for (String classItem : classArray) {
-				LOG.debug("classItem="+classItem);
+				LOG.info("classItem="+classItem);
 				if (classItem.endsWith(".*")) {
 					String packageName = classItem.substring(0, classItem.length()-2);
 					List<Class> classList = ReflectUtil.getClasses(packageName, Entity.class);
