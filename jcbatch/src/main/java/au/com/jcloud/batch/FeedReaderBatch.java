@@ -9,21 +9,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.GZIPInputStream;
 
+import javax.persistence.PersistenceException;
+
 import org.apache.log4j.Logger;
-import org.h2.jdbc.JdbcSQLException;
 import org.xml.sax.InputSource;
 
 import com.avaje.ebean.Ebean;
-import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
-import com.sun.org.apache.xml.internal.utils.StringBufferPool;
 import com.sun.syndication.feed.synd.SyndCategory;
 import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.FeedException;
 import com.sun.syndication.io.SyndFeedInput;
-
-import javax.persistence.PersistenceException;
 
 import au.com.jcloud.model.Blog;
 import au.com.jcloud.model.BlogSource;
