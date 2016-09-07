@@ -37,10 +37,10 @@ public class PropertyUtil {
 
 		if (useOverride) {
 			// Look for any override properties
-			String overrideParam = "override";
-			String os = System.getProperty("os.name");
-			if (os.toLowerCase().contains("win")) {
-				overrideParam = "win." + overrideParam;
+			String overrideParam = Constants.PARAM_OVERRIDE;
+			String os = System.getProperty(Constants.PROP_SYS_OS_NAME);
+			if (os.toLowerCase().contains(Constants.OS_WIN)) {
+				overrideParam = overrideParam+"w";
 			}
 			if (properties.containsKey(overrideParam)) {
 				String value = properties.getProperty(overrideParam);

@@ -23,6 +23,10 @@ public class Constants {
 	public static final DateFormat DATEFORMAT_DATE_AUD = new SimpleDateFormat(DATE_FORMAT_AUD);
 	public static final DateFormat DATEFORMAT_DATETIME_AUD = new SimpleDateFormat(DATE_FORMAT_AUD+" "+TIME_FORMAT_24);
 
+	public static final String PARAM_OVERRIDE = "override";
+	public static final String PROP_SYS_OS_NAME = "os.name";
+	public static final String OS_WIN = "win";
+
 	public static final String PATH_RESOURCES_TEST = "src/test/resources/";
 	public static final String PATH_RESOURCES_MAIN = "src/main/resources/";
 
