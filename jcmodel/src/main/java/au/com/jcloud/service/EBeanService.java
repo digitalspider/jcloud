@@ -65,7 +65,7 @@ public class EBeanService {
 				LOG.debug("classItem="+classItem);
 				if (classItem.endsWith(".*")) {
 					String packageName = classItem.substring(0, classItem.length()-2);
-					List<Class> classList = ReflectUtil.getClasses(packageName, Entity.class);
+					List<Class> classList = ReflectUtil.getClasses(packageName, Entity.class, new EBeanService().getClass().getClassLoader());
 					for (Class<?> classToAdd : classList) {
 						config.addClass(classToAdd);
 					}

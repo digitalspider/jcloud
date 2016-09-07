@@ -56,7 +56,7 @@ public class ReflectUtil {
 		LOG.debug("dirs="+dirs);
 		List<Class> classes = new ArrayList<Class>();
 		for (File directory : dirs) {
-			classes.addAll(findClasses(directory, packageName, filterClassType, excludeSelf));
+			classes.addAll(findClasses(directory, packageName, filterClassType, excludeSelf, classLoader));
 		}
 		LOG.debug("classes="+classes);
 		return classes;
@@ -101,7 +101,7 @@ public class ReflectUtil {
 		LOG.debug("dirs="+dirs);
 		List<Class> classes = new ArrayList<Class>();
 		for (File directory : dirs) {
-			classes.addAll(findClasses(directory, packageName, annotationClass));
+			classes.addAll(findClasses(directory, packageName, annotationClass, classLoader));
 		}
 		LOG.debug("classes="+classes);
 		return classes;
@@ -116,7 +116,7 @@ public class ReflectUtil {
 	 * @throws ClassNotFoundException
 	 */
 	@SuppressWarnings("unchecked")
-	public static List<Class> findClasses(File directory, String packageName, Class filterClassType, boolean excludeSelf) throws ClassNotFoundException {
+	public static List<Class> findClasses(File directory, String packageName, Class filterClassType, boolean excludeSelf, ClassLoader classLoader) throws ClassNotFoundException {
 
 		List<Class> classes = new ArrayList<Class>();
 
@@ -128,7 +128,7 @@ public class ReflectUtil {
 		for (File file : files) {
 			if (file.isDirectory()) {
 				assert !file.getName().contains(".");
-				classes.addAll(findClasses(file, packageName + "." + file.getName(), filterClassType, excludeSelf));
+				classes.addAll(findClasses(file, packageName + "." + file.getName(), filterClassType, excludeSelf, classLoader));
 			} else if (file.getName().endsWith(".class")) {
 				Class classType = Class.forName(packageName + '.' + file.getName().substring(0, file.getName().length() - 6));
 				if (filterClassType == null || (filterClassType!=null && filterClassType.isAssignableFrom(classType))) {
@@ -139,7 +139,7 @@ public class ReflectUtil {
 			} else if (file.toString().startsWith("file:") && file.toString().contains(".jar!")) {
 				int index = directory.toString().indexOf("!");
 				String pathToJar = directory.toString().substring(5,index);
-				classes.addAll(findClassesInJar(new File(pathToJar), packageName, filterClassType, excludeSelf));
+				classes.addAll(findClassesInJar(new File(pathToJar), packageName, filterClassType, excludeSelf, classLoader));
 			}
 		}
 		return classes;
@@ -154,7 +154,7 @@ public class ReflectUtil {
 	 * @throws ClassNotFoundException
 	 */
 	@SuppressWarnings("unchecked")
-	public static List<Class> findClasses(File directory, String packageName, Class<? extends Annotation> annotationClass) throws ClassNotFoundException {
+	public static List<Class> findClasses(File directory, String packageName, Class<? extends Annotation> annotationClass, ClassLoader classLoader) throws ClassNotFoundException {
 
 		List<Class> classes = new ArrayList<Class>();
 
@@ -163,7 +163,7 @@ public class ReflectUtil {
 			if (directory.toString().startsWith("file:") && directory.toString().contains(".jar!")) {
 				int index = directory.toString().indexOf("!");
 				String pathToJar = directory.toString().substring(5,index);
-				classes = findClassesInJar(new File(pathToJar), packageName, annotationClass);
+				classes = findClassesInJar(new File(pathToJar), packageName, annotationClass, classLoader);
 			}
 			return classes;
 		}
@@ -174,7 +174,7 @@ public class ReflectUtil {
 			LOG.debug("file="+file);
 			if (file.isDirectory()) {
 				assert !file.getName().contains(".");
-				classes.addAll(findClasses(file, packageName + "." + file.getName(), annotationClass));
+				classes.addAll(findClasses(file, packageName + "." + file.getName(), annotationClass, classLoader));
 			} else if (file.getName().endsWith(".class")) {
 				Class classType = Class.forName(packageName + '.' + file.getName().substring(0, file.getName().length() - 6));
 				LOG.debug("classType="+classType);
@@ -186,6 +186,7 @@ public class ReflectUtil {
 		return classes;
 	}
 
+
 	/**
 	 * Find all classes in a given jar file
 	 *
@@ -196,6 +197,19 @@ public class ReflectUtil {
 	 */
 	@SuppressWarnings("unchecked")
 	public static List<Class> findClassesInJar(File pathToJar, String packageName, Class filterClassType, boolean excludeSelf) throws ClassNotFoundException {
+		return findClassesInJar(pathToJar, packageName, filterClassType, excludeSelf, null);
+	}
+
+	/**
+	 * Find all classes in a given jar file
+	 *
+	 * @param pathToJar   The jar file
+	 * @param packageName The package name for classes found inside the base directory
+	 * @return The classes
+	 * @throws ClassNotFoundException
+	 */
+	@SuppressWarnings("unchecked")
+	public static List<Class> findClassesInJar(File pathToJar, String packageName, Class filterClassType, boolean excludeSelf, ClassLoader classLoader) throws ClassNotFoundException {
 
 		List<Class> classes = new ArrayList<Class>();
 
@@ -209,8 +223,9 @@ public class ReflectUtil {
 
 			String pathToFind = packageName.replace('.', '/');
 			URL[] urls = {new URL("jar:file:" + pathToJar + "!/" + pathToFind)};
-			URLClassLoader cl = URLClassLoader.newInstance(urls);
-
+			if (classLoader == null) {
+				classLoader = URLClassLoader.newInstance(urls);
+			}
 			while (e.hasMoreElements()) {
 				JarEntry je = e.nextElement();
 				if (je.isDirectory() || !je.getName().endsWith(".class") || !je.getName().startsWith(pathToFind)) {
@@ -221,7 +236,7 @@ public class ReflectUtil {
 				String className = je.getName().substring(0, je.getName().length() - 6);
 				LOG.debug("className=" + className);
 				className = className.replace('/', '.');
-				Class classType = cl.loadClass(className);
+				Class classType = classLoader.loadClass(className);
 				LOG.debug("classType=" + classType);
 				if (filterClassType == null || (filterClassType!=null && filterClassType.isAssignableFrom(classType))) {
 					if (!(excludeSelf && classType.equals(filterClassType))) {
@@ -245,6 +260,19 @@ public class ReflectUtil {
 	 */
 	@SuppressWarnings("unchecked")
 	public static List<Class> findClassesInJar(File pathToJar, String packageName, Class<? extends Annotation> annotationClass) throws ClassNotFoundException {
+		return findClassesInJar(pathToJar, packageName, annotationClass, null);
+	}
+	
+	/**
+	 * Find all classes in a given jar file
+	 *
+	 * @param pathToJar   The jar file
+	 * @param packageName The package name for classes found inside the base directory
+	 * @return The classes
+	 * @throws ClassNotFoundException
+	 */
+	@SuppressWarnings("unchecked")
+	public static List<Class> findClassesInJar(File pathToJar, String packageName, Class<? extends Annotation> annotationClass, ClassLoader classLoader) throws ClassNotFoundException {
 
 		List<Class> classes = new ArrayList<Class>();
 
@@ -258,8 +286,9 @@ public class ReflectUtil {
 
 			String pathToFind = packageName.replace('.', '/');
 			URL[] urls = {new URL("jar:file:" + pathToJar + "!/" + pathToFind)};
-			URLClassLoader cl = URLClassLoader.newInstance(urls);
-
+			if (classLoader == null) {
+				classLoader = URLClassLoader.newInstance(urls);
+			}
 			while (e.hasMoreElements()) {
 				JarEntry je = e.nextElement();
 				if (je.isDirectory() || !je.getName().endsWith(".class") || !je.getName().startsWith(pathToFind)) {
@@ -270,7 +299,7 @@ public class ReflectUtil {
 				String className = je.getName().substring(0, je.getName().length() - 6);
 				LOG.debug("className=" + className);
 				className = className.replace('/', '.');
-				Class classType = cl.loadClass(className);
+				Class classType = classLoader.loadClass(className);
 				LOG.debug("classType=" + classType);
 				if (classType.isAnnotationPresent(annotationClass)) {
 					classes.add(classType);
