@@ -24,6 +24,7 @@
 	</developers>
 
     <properties>
+    	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jcloud.version>1.0-SNAPSHOT</jcloud.version>
         <java.version>1.7</java.version>
         <ebean.version>8.1.1</ebean.version>
