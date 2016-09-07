@@ -1,7 +1,5 @@
 package au.com.jcloud.util;
 
-import org.apache.log4j.Logger;
-
 import java.io.File;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
@@ -13,6 +11,8 @@ import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+import org.apache.log4j.Logger;
+
 public class ReflectUtil {
 	public static final Logger LOG = Logger.getLogger(ReflectUtil.class);
 
@@ -20,12 +20,28 @@ public class ReflectUtil {
 	 * Scans all classes accessible from the context class loader which belong to the given package and subpackages.
 	 *
 	 * @param packageName The base package
+	 * @param filterClassType find only classes that inherit from this class
+	 * @param excludeSelf exclude the filterClassType from the results
 	 * @return The classes
 	 * @throws ClassNotFoundException
 	 * @throws IOException
 	 */
 	public static List<Class> getClasses(String packageName, Class filterClassType, boolean excludeSelf) throws ClassNotFoundException, IOException {
-		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		return getClasses(packageName, filterClassType, excludeSelf, Thread.currentThread().getContextClassLoader());
+	}
+	
+	/**
+	 * Scans all classes accessible from the context class loader which belong to the given package and subpackages.
+	 *
+	 * @param packageName The base package
+	 * @param filterClassType find only classes that inherit from this class
+	 * @param excludeSelf exclude the filterClassType from the results
+	 * @param the classLoader to use in the search
+	 * @return The classes
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 */
+	public static List<Class> getClasses(String packageName, Class filterClassType, boolean excludeSelf, ClassLoader classLoader) throws ClassNotFoundException, IOException {
 		LOG.debug("classLoader="+classLoader);
 		assert classLoader != null;
 		String path = packageName.replace('.', '/');
@@ -51,12 +67,26 @@ public class ReflectUtil {
 	 * Scans all classes accessible from the context class loader which belong to the given package and subpackages.
 	 *
 	 * @param packageName The base package
+	 * @param annotationClass the annotation the classes should have
 	 * @return The classes
 	 * @throws ClassNotFoundException
 	 * @throws IOException
 	 */
 	public static List<Class> getClasses(String packageName, Class<? extends Annotation> annotationClass) throws ClassNotFoundException, IOException {
-		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		return getClasses(packageName, annotationClass, Thread.currentThread().getContextClassLoader());
+	}
+	
+	/**
+	 * Scans all classes accessible from the context class loader which belong to the given package and subpackages.
+	 *
+	 * @param packageName The base package
+	 * @param annotationClass the annotation the classes should have
+	 * @param the classLoader to use in the search
+	 * @return The classes
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 */
+	public static List<Class> getClasses(String packageName, Class<? extends Annotation> annotationClass, ClassLoader classLoader) throws ClassNotFoundException, IOException {
 		LOG.debug("classLoader="+classLoader);
 		assert classLoader != null;
 		String path = packageName.replace('.', '/');
