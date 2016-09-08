@@ -40,7 +40,7 @@ public class FeedReaderBatch {
 			String[] feedArray = feeds.split(DelimiterConstants.COMMA);
 			for (String url : feedArray) {
 				try {
-					readAndWriteFeed(url);
+					readAndWriteFeed(url.trim());
 				} catch (Exception e) {
 					LOG.error("ERROR in url="+url+" ERROR="+e,e);
 				}
