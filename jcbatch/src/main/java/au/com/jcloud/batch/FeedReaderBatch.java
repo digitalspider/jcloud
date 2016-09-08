@@ -54,6 +54,7 @@ public class FeedReaderBatch {
 		LOG.info("feed.url=" + url);
 		SyndFeed feed = FeedUtil.getFeedForUrl(url);
 		LOG.trace("feed=" + feed);
+		LOG.info("feed.entries.size=" + feed.getEntries().size());
 		List<Blog> blogs = FeedUtil.mapFeedToBlog(feed);
 		LOG.info("blogs=" + blogs);
 		FeedUtil.writeBlogs(blogs);

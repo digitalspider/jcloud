@@ -95,7 +95,7 @@ public class FeedUtil {
 		} else {
 			source = sourceInDB;
 		}
-		LOG.info("feed.entries.size=" + feed.getEntries().size());
+		LOG.debug("feed.entries.size=" + feed.getEntries().size());
 		for (Object feedObj : feed.getEntries()) {
 			Blog blog = mapSyndEntryToBlog((SyndEntry) feedObj);
 			blog.setSource(source);
