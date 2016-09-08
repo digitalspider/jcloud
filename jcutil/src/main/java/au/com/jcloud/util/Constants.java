@@ -30,6 +30,7 @@ public class Constants {
 	public static final String PATH_RESOURCES_TEST = "src/test/resources/";
 	public static final String PATH_RESOURCES_MAIN = "src/main/resources/";
 
+	public static final String FILENAME_PROPERTIES_BATCH = "batch.properties";
 	public static final String FILENAME_PROPERTIES_JC = "jc.properties";
 	public static final String FILENAME_PROPERTIES_DB = "db.properites";
 	public static final String FILENAME_PROPERTIES_EMAIL = "email.properties";
@@ -46,4 +47,6 @@ public class Constants {
 	public static final String EBEAN = "ebean";
 	public static final String EBEAN_DEFAULT = EBEAN+".default";
 	public static final String EBEAN_JNDI_DS = EBEAN+".jndi.ds";
+
+	public static final String PROP_FEEDS="feeds";
 }

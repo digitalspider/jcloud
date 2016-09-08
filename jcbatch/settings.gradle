@@ -1,0 +1,2 @@
+rootProject.name = 'jcbatch'
+includeFlat 'jcutil', 'jcmodel', 'jcmodelweb'
