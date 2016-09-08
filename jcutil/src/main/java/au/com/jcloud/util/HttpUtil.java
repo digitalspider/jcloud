@@ -79,7 +79,11 @@ public class HttpUtil {
 	}
 
 	public static String getUserAgent(final HttpServletRequest request) {
-		return request.getHeader("User-Agent");
+		return request.getHeader(Constants.HEADER_USER_AGENT);
+	}
+
+	public static String getReferrer(final HttpServletRequest request) {
+		return request.getHeader(Constants.HEADER_REFERER);
 	}
 
 	public static String getIpAddress(final HttpServletRequest request) {

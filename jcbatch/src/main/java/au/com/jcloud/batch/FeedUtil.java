@@ -22,6 +22,7 @@ import java.util.zip.GZIPInputStream;
 
 import javax.persistence.PersistenceException;
 
+import au.com.jcloud.enums.Status;
 import au.com.jcloud.model.Blog;
 import au.com.jcloud.model.BlogSource;
 
@@ -85,7 +86,7 @@ public class FeedUtil {
 	 * @param feed
 	 * @return
 	 */
-	public static List<Blog> mapFeedToBlog(SyndFeed feed) {
+	public static List<Blog> mapFeedToBlog(SyndFeed feed, boolean enable) {
 		List<Blog> blogs = new ArrayList<>();
 		BlogSource source = null;
 		BlogSource sourceInDB = getBlogSourceByLink(feed.getLink());
@@ -99,6 +100,9 @@ public class FeedUtil {
 		for (Object feedObj : feed.getEntries()) {
 			Blog blog = mapSyndEntryToBlog((SyndEntry) feedObj);
 			blog.setSource(source);
+			if (enable) {
+				blog.setStatus(Status.ENABLED.value());
+			}
 			blogs.add(blog);
 		}
 		return blogs;

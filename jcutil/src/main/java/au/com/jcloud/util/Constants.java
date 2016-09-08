@@ -43,10 +43,13 @@ public class Constants {
 	public static final String HEADER_X_FORWARDED_FOR = "x-forwarded-for";
 	public static final String HEADER_X_REAL_IP = "X-Real-IP";
 	public static final String HEADER_X_FRAME_OPTIONS = "X-FRAME-OPTIONS";
+	public static final String HEADER_USER_AGENT = "User-Agent";
+	public static final String HEADER_REFERER = "referer";
 	
 	public static final String EBEAN = "ebean";
 	public static final String EBEAN_DEFAULT = EBEAN+".default";
 	public static final String EBEAN_JNDI_DS = EBEAN+".jndi.ds";
 
 	public static final String PROP_FEEDS="feeds";
+	public static final String PROP_FEEDS_ENABLE="feeds.enable";
 }

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.sun.syndication.feed.synd.SyndFeed;
@@ -37,10 +38,15 @@ public class FeedReaderBatch {
 			FeedReaderBatch r = new FeedReaderBatch();
 			Properties properties = PropertyUtil.loadProperties(Constants.FILENAME_PROPERTIES_BATCH);
 			String feeds = properties.getProperty(Constants.PROP_FEEDS);
+			boolean enableFeeds = false;
+			String enableFeedsProperty = properties.getProperty(Constants.PROP_FEEDS_ENABLE);
+			if (StringUtils.isNotBlank(enableFeedsProperty) && Boolean.parseBoolean(enableFeedsProperty)) {
+				enableFeeds = true;
+			}
 			String[] feedArray = feeds.split(DelimiterConstants.COMMA);
 			for (String url : feedArray) {
 				try {
-					readAndWriteFeed(url.trim());
+					readAndWriteFeed(url.trim(), enableFeeds);
 				} catch (Exception e) {
 					LOG.error("ERROR in url="+url+" ERROR="+e,e);
 				}
@@ -50,12 +56,12 @@ public class FeedReaderBatch {
 		}
 	}
 
-	public static void readAndWriteFeed(String url) throws IOException, IllegalArgumentException, FeedException {
+	public static void readAndWriteFeed(String url, boolean enableFeeds) throws IOException, IllegalArgumentException, FeedException {
 		LOG.info("feed.url=" + url);
 		SyndFeed feed = FeedUtil.getFeedForUrl(url);
 		LOG.trace("feed=" + feed);
 		LOG.info("feed.entries.size=" + feed.getEntries().size());
-		List<Blog> blogs = FeedUtil.mapFeedToBlog(feed);
+		List<Blog> blogs = FeedUtil.mapFeedToBlog(feed, enableFeeds);
 		LOG.info("blogs=" + blogs);
 		FeedUtil.writeBlogs(blogs);
 	}
