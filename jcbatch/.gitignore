@@ -15,6 +15,7 @@ RemoteSystemsTempFiles
 *.iws
 *.log
 *.db
+/*.sql
 
 # Package Files #
 *.jar
