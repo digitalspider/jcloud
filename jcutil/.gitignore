@@ -15,6 +15,7 @@ RemoteSystemsTempFiles
 *.iws
 *.log
 *.db
+/gradle.properties
 
 # Package Files #
 *.jar
