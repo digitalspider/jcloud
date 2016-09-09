@@ -49,6 +49,21 @@ public class HttpUtil {
 		}
 		return domain;
 	}
+	
+	public static PathParts getPathParts(HttpServletRequest request) {
+		return getPathParts(request.getPathInfo());
+	}
+	
+    public static PathParts getPathParts(String pathInfo) {
+        LOG.debug("pathInfo="+pathInfo);
+        if (pathInfo!=null) {
+        	if (pathInfo.startsWith("/")) {
+        		pathInfo = pathInfo.substring(1);
+        	}
+        	return new PathParts(pathInfo.split("/"));
+        }
+        return new PathParts();
+    }
 
 	public static String getContextUrl(final HttpServletRequest request) {
 		String url = request.getRequestURL().toString();
