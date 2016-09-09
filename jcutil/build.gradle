@@ -10,6 +10,7 @@ description = """jcloud util"""
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
+compileJava.options.bootClasspath = "$JDK7_HOME/jre/lib/rt.jar"
 
 repositories {
      maven { url "https://maven.atlassian.com/repository/public" }
