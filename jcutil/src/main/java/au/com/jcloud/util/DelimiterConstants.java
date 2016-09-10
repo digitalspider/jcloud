@@ -1,6 +1,7 @@
 package au.com.jcloud.util;
 
 public class DelimiterConstants {
+	public static final String SPACE = " ";
 	public static final String COMMA = ",";
 	public static final String FULLSTOP = ".";
 	public static final String UNDERSCORE = "_";
