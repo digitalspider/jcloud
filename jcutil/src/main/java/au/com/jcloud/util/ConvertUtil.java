@@ -20,7 +20,7 @@ public class ConvertUtil {
 		return buffer.getLong();
 	}
 
-	public String getLowerCaseWithDash(String input) {
+	public static String getLowerCaseWithDash(String input) {
 		return input.toLowerCase().replace(DelimiterConstants.SPACE, DelimiterConstants.DASH);
 	}
 
