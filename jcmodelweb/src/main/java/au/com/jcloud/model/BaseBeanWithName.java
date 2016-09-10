@@ -1,5 +1,6 @@
 package au.com.jcloud.model;
 
+import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
 /**
@@ -7,6 +8,7 @@ import javax.persistence.MappedSuperclass;
  */
 @MappedSuperclass
 public class BaseBeanWithName extends BaseBean {
+	@Column(nullable = false)
 	protected String name;
 
 	@Override

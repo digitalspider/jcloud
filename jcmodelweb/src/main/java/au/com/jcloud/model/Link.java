@@ -1,32 +1,36 @@
 package au.com.jcloud.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
  * Created by david.vittor on 30/08/16.
  */
 @Entity
-@Table(name = "link")
-public class Link extends BaseBean {
+@Table(name = "link", uniqueConstraints = @UniqueConstraint(columnNames={"name","link"}))
+public class Link extends BaseBeanWithName {
+	@Column(nullable = false)
 	protected String title;
 	protected String extract;
-	protected String url;
+	@Column(nullable = false)
+	protected String link;
 	protected String tags;
 	protected int clickCount;
 	protected int rank;
 
 	@Override
 	public String toString() {
-		return super.toString() + " title="+title+" clickCount=" + clickCount+" url=" + url+" tags=" + tags+" rank=" + rank;
+		return super.toString() + " title="+title+" clickCount=" + clickCount+" link=" + link+" tags=" + tags+" rank=" + rank;
 	}
 
-	public String getUrl() {
-		return url;
+	public String getLink() {
+		return link;
 	}
 
-	public void setUrl(String url) {
-		this.url = url;
+	public void setLink(String link) {
+		this.link = link;
 	}
 
 	public String getTitle() {

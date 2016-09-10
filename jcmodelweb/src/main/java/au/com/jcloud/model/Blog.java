@@ -14,8 +14,8 @@ import javax.persistence.UniqueConstraint;
  * Created by david.vitor on 1/09/16.
  */
 @Entity
-@Table(name = "blog", uniqueConstraints = @UniqueConstraint(columnNames={"link"}))
-public class Blog extends BaseBean {
+@Table(name = "blog", uniqueConstraints = @UniqueConstraint(columnNames={"name","link"}))
+public class Blog extends BaseBeanWithName {
 	@ManyToOne(optional = false, cascade = CascadeType.ALL)
 	@JoinColumn(name = "source_id", referencedColumnName = "id")
 	protected BlogSource source;
