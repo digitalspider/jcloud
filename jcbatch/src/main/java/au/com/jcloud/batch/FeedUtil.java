@@ -25,6 +25,7 @@ import javax.persistence.PersistenceException;
 import au.com.jcloud.enums.Status;
 import au.com.jcloud.model.Blog;
 import au.com.jcloud.model.BlogSource;
+import au.com.jcloud.util.ConvertUtil;
 
 /**
  * Created by david.vittor on 8/09/16.
@@ -178,6 +179,7 @@ public class FeedUtil {
 		blog.setLink(entry.getLink());
 		blog.setAuthor(entry.getAuthor());
 		blog.setTitle(entry.getTitle());
+		blog.setName(ConvertUtil.getLowerCaseWithDash(blog.getTitle()));
 		blog.setAuthor(entry.getAuthor());
 		blog.setUri(entry.getUri());
 		blog.setPublistedDate(entry.getPublishedDate());
