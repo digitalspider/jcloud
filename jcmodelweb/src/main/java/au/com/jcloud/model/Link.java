@@ -13,7 +13,7 @@ import javax.persistence.UniqueConstraint;
 public class Link extends BaseBeanWithName {
 	@Column(nullable = false)
 	protected String title;
-	protected String extract;
+	protected String description;
 	@Column(nullable = false)
 	protected String link;
 	protected String tags;
@@ -22,7 +22,7 @@ public class Link extends BaseBeanWithName {
 
 	@Override
 	public String toString() {
-		return super.toString() + " title="+title+" clickCount=" + clickCount+" link=" + link+" tags=" + tags+" rank=" + rank;
+		return super.toString() + " title="+title+" link=" + link+" tags=" + tags+" clickCount=" + clickCount+" rank=" + rank;
 	}
 
 	public String getLink() {
@@ -65,11 +65,11 @@ public class Link extends BaseBeanWithName {
 		this.rank = rank;
 	}
 
-	public String getExtract() {
-		return extract;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setExtract(String extract) {
-		this.extract = extract;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }
