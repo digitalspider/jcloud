@@ -42,12 +42,13 @@ public class Server extends BaseBeanWithName {
 	@ManyToOne(optional = false, cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	protected User user;
-	@OneToMany(mappedBy = "server", cascade = CascadeType.PERSIST)
-	protected List<Service> services;
 	@ManyToOne(optional = false, cascade = CascadeType.ALL)
 	@JoinColumn(name = "purchase_id", referencedColumnName = "id")
 	protected Purchase purchase;
-	@OneToMany(mappedBy = "request", cascade = CascadeType.PERSIST)
+
+	@OneToMany(mappedBy = "server", cascade = CascadeType.PERSIST)
+	protected List<Service> services;
+	@OneToMany(mappedBy = "server", cascade = CascadeType.PERSIST)
 	protected List<Request> requests;
 
 	@Override
