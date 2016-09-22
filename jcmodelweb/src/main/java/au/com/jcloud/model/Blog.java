@@ -34,8 +34,10 @@ public class Blog extends BaseBeanWithName {
 	@Column(columnDefinition = "TEXT")
 	protected String content;
 	protected String tags;
-	protected int clickCount;
-	protected int rank;
+	@Column(nullable = false, columnDefinition = "integer default 0")
+	protected int clickCount = 0;
+	@Column(nullable = false, columnDefinition = "integer default 0")
+	protected int rank = 0;
 
 	@Override
 	public String toString() {

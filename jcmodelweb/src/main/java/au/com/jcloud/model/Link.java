@@ -17,8 +17,10 @@ public class Link extends BaseBeanWithName {
 	@Column(nullable = false)
 	protected String link;
 	protected String tags;
-	protected int clickCount;
-	protected int rank;
+	@Column(nullable = false, columnDefinition = "integer default 0")
+	protected int clickCount = 0;
+	@Column(nullable = false, columnDefinition = "integer default 0")
+	protected int rank = 0;
 
 	@Override
 	public String toString() {
