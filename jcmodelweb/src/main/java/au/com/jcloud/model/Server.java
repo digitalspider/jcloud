@@ -18,6 +18,7 @@ import javax.persistence.Table;
 public class Server extends BaseBeanWithName {
 	protected String lxdId;
 	protected String ip;
+	protected String host;
 	protected String alias;
 	@ManyToOne(optional = false, cascade = CascadeType.ALL)
 	@JoinColumn(name = "os_id", referencedColumnName = "id")
@@ -60,6 +61,15 @@ public class Server extends BaseBeanWithName {
 
 	public void setIp(String ip) {
 		this.ip = ip;
+	}
+
+
+	public String getHost() {
+		return host;
+	}
+
+	public void setHost(String host) {
+		this.host = host;
 	}
 
 	public String getAlias() {
