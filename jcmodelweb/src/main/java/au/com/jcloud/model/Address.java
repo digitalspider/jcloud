@@ -14,7 +14,7 @@ import javax.persistence.Table;
 public class Address extends BaseBean {
 	protected String address;
 	protected String city;
-	protected String suburb;
+	protected String state;
 	protected String postcode;
 
 	@ManyToOne(optional = false, cascade = CascadeType.ALL)
@@ -23,7 +23,7 @@ public class Address extends BaseBean {
 
 	@Override
 	public String toString() {
-		return super.toString() + " address=" + address + " city=" + city + " suburb=" + suburb + " postcode=" + postcode;
+		return super.toString() + " address=" + address + " city=" + city + " state=" + state + " postcode=" + postcode;
 	}
 
 	public String getAddress() {
@@ -42,12 +42,12 @@ public class Address extends BaseBean {
 		this.city = city;
 	}
 
-	public String getSuburb() {
-		return suburb;
+	public String getState() {
+		return state;
 	}
 
-	public void setSuburb(String suburb) {
-		this.suburb = suburb;
+	public void setState(String state) {
+		this.state = state;
 	}
 
 	public String getPostcode() {
