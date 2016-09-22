@@ -19,6 +19,7 @@ public class Server extends BaseBeanWithName {
 	protected String lxdId;
 	protected String ip;
 	protected String host;
+	protected String type;
 	protected String alias;
 	@ManyToOne(optional = false, cascade = CascadeType.ALL)
 	@JoinColumn(name = "os_id", referencedColumnName = "id")
@@ -64,13 +65,20 @@ public class Server extends BaseBeanWithName {
 		this.ip = ip;
 	}
 
-
 	public String getHost() {
 		return host;
 	}
 
 	public void setHost(String host) {
 		this.host = host;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public String getAlias() {

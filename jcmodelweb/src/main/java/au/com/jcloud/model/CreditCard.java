@@ -10,7 +10,7 @@ import javax.persistence.Table;
  * Created by david.vittor on 5/08/16.
  */
 @Entity
-@Table(name = "credit_card")
+@Table(name = "creditcard")
 public class CreditCard extends BaseBean {
 	protected String type;
 	protected String expiry;

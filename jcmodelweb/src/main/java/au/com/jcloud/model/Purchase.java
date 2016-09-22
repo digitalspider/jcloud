@@ -24,7 +24,7 @@ public class Purchase extends BaseBean {
 	protected Date date;
 
 	@ManyToMany
-	@JoinTable(name = "purchase_product", joinColumns = @JoinColumn(name = "purchase_id", referencedColumnName = "id") , inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id") )
+	@JoinTable(name = "purchaseproduct", joinColumns = @JoinColumn(name = "purchase_id", referencedColumnName = "id") , inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id") )
 	protected List<Product> products;
 
 	@OneToMany(mappedBy = "purchase")

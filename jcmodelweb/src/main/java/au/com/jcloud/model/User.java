@@ -24,7 +24,7 @@ public class User extends BaseBean {
 	protected String lastName;
 
 	@ManyToMany
-	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id") , inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id") )
+	@JoinTable(name = "userrole", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id") , inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id") )
 	protected Set<Role> roles;
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)

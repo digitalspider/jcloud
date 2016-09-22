@@ -16,7 +16,7 @@ import javax.persistence.Table;
 public class Category extends BaseBeanWithName {
 
 	@ManyToMany
-	@JoinTable(name = "category_product", joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id") , inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id") )
+	@JoinTable(name = "categoryproduct", joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id") , inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id") )
 	protected List<Product> products;
 
 	public List<Product> getProducts() {
