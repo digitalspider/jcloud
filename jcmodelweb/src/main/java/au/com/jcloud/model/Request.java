@@ -19,6 +19,10 @@ public class Request extends BaseBean {
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	private User user;
 
+	@ManyToOne(optional = false, cascade = CascadeType.ALL)
+	@JoinColumn(name = "server_id", referencedColumnName = "id")
+	private Server server;
+
 	public String getTitle() {
 		return title;
 	}
@@ -49,5 +53,13 @@ public class Request extends BaseBean {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public Server getServer() {
+		return server;
+	}
+
+	public void setServer(Server server) {
+		this.server = server;
 	}
 }

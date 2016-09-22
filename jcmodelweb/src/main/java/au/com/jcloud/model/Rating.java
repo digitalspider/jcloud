@@ -13,6 +13,7 @@ import javax.persistence.Table;
 @Table(name = "rating")
 public class Rating extends BaseBean {
 	private int rating;
+	private String type;
 	private String content;
 	@ManyToOne(optional = false, cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
@@ -40,5 +41,13 @@ public class Rating extends BaseBean {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 }

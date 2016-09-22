@@ -23,13 +23,35 @@ public class User extends BaseBean {
 	protected String firstName;
 	protected String lastName;
 
-	public String getFullName() {
-		return firstName + " " + lastName;
-	}
+	@OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
+	protected List<Address> addresses;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
+	protected List<Server> servers;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
+	protected List<CreditCard> creditCards;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
+	protected List<Rating> ratings;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
+	protected List<Purchase> purchases;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
+	protected List<Invoice> invoices;
+
+	@ManyToMany
+	@JoinTable(name = "userrole", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id") , inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id") )
+	protected Set<Role> roles;
 
 	@Override
 	public String toString() {
-		return super.toString() + " username="+username+" email=" + email + " firstName=" + firstName + " lastName=" + lastName;
+		return super.toString() + " username=" + username + " email=" + email + " firstName=" + firstName + " lastName=" + lastName;
+	}
+
+	public String getFullName() {
+		return firstName + " " + lastName;
 	}
 
 	public String getUsername() {
@@ -72,23 +94,20 @@ public class User extends BaseBean {
 		this.lastName = lastName;
 	}
 
-	@ManyToMany
-	@JoinTable(
-			name = "userrole",
-			joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-			inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
-	)
-	protected Set<Role> roles;
-
-	@OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
-	protected List<Server> serverList;
-
-	public List<Server> getServerList() {
-		return serverList;
+	public List<Address> getAddresses() {
+		return addresses;
 	}
 
-	public void setServerList(List<Server> serverList) {
-		this.serverList = serverList;
+	public void setAddresses(List<Address> addresses) {
+		this.addresses = addresses;
+	}
+
+	public List<Server> getServers() {
+		return servers;
+	}
+
+	public void setServers(List<Server> servers) {
+		this.servers = servers;
 	}
 
 	public Set<Role> getRoles() {
@@ -97,5 +116,37 @@ public class User extends BaseBean {
 
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
+	}
+
+	public List<CreditCard> getCreditCards() {
+		return creditCards;
+	}
+
+	public void setCreditCards(List<CreditCard> creditCards) {
+		this.creditCards = creditCards;
+	}
+
+	public List<Rating> getRatings() {
+		return ratings;
+	}
+
+	public void setRatings(List<Rating> ratings) {
+		this.ratings = ratings;
+	}
+
+	public List<Purchase> getPurchases() {
+		return purchases;
+	}
+
+	public void setPurchases(List<Purchase> purchases) {
+		this.purchases = purchases;
+	}
+
+	public List<Invoice> getInvoices() {
+		return invoices;
+	}
+
+	public void setInvoices(List<Invoice> invoices) {
+		this.invoices = invoices;
 	}
 }

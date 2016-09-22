@@ -2,11 +2,13 @@ package au.com.jcloud.model;
 
 import java.math.BigDecimal;
 import java.util.Currency;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -15,6 +17,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "invoice")
 public class Invoice extends BaseBean {
+	@ManyToOne(optional = false, cascade = CascadeType.ALL)
+	@JoinColumn(name = "purchase_id", referencedColumnName = "id")
 	protected Purchase purchase;
 	@ManyToOne(optional = false, cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
@@ -24,6 +28,9 @@ public class Invoice extends BaseBean {
 	protected String description;
 	protected BigDecimal price;
 	protected Currency currency;
+
+	@OneToMany(mappedBy = "invoice")
+	protected List<InvoiceLine> invoiceLines;
 
 	public Purchase getPurchase() {
 		return purchase;
@@ -79,5 +86,13 @@ public class Invoice extends BaseBean {
 
 	public void setCurrency(Currency currency) {
 		this.currency = currency;
+	}
+
+	public List<InvoiceLine> getInvoiceLines() {
+		return invoiceLines;
+	}
+
+	public void setInvoiceLines(List<InvoiceLine> invoiceLines) {
+		this.invoiceLines = invoiceLines;
 	}
 }

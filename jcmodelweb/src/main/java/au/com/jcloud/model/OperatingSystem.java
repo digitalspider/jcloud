@@ -1,6 +1,9 @@
 package au.com.jcloud.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -13,6 +16,9 @@ public class OperatingSystem extends BaseBean {
 	private String distribution;
 	private String version;
 	private String architecture;
+
+	@OneToMany(mappedBy = "os")
+	protected List<Server> servers;
 
 	public String getDistribution() {
 		return distribution;
@@ -36,5 +42,13 @@ public class OperatingSystem extends BaseBean {
 
 	public void setArchitecture(String architecture) {
 		this.architecture = architecture;
+	}
+
+	public List<Server> getServers() {
+		return servers;
+	}
+
+	public void setServers(List<Server> servers) {
+		this.servers = servers;
 	}
 }

@@ -1,11 +1,13 @@
 package au.com.jcloud.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -39,6 +41,13 @@ public class Server extends BaseBeanWithName {
 	@ManyToOne(optional = false, cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	protected User user;
+	@OneToMany(mappedBy = "server", cascade = CascadeType.PERSIST)
+	protected List<Service> services;
+	@ManyToOne(optional = false, cascade = CascadeType.ALL)
+	@JoinColumn(name = "purchase_id", referencedColumnName = "id")
+	protected Purchase purchase;
+	@OneToMany(mappedBy = "request", cascade = CascadeType.PERSIST)
+	protected List<Request> requests;
 
 	@Override
 	public String toString() {
@@ -155,5 +164,93 @@ public class Server extends BaseBeanWithName {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public Purchase getPurchase() {
+		return purchase;
+	}
+
+	public void setPurchase(Purchase purchase) {
+		this.purchase = purchase;
+	}
+
+	public List<Service> getServices() {
+		return services;
+	}
+
+	public void setServices(List<Service> services) {
+		this.services = services;
+	}
+
+	public List<Request> getRequests() {
+		return requests;
+	}
+
+	public void setRequests(List<Request> requests) {
+		this.requests = requests;
+	}
+
+	public String getLxdId() {
+		return lxdId;
+	}
+
+	public void setLxdId(String lxdId) {
+		this.lxdId = lxdId;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Date getPdate() {
+		return pdate;
+	}
+
+	public void setPdate(Date pdate) {
+		this.pdate = pdate;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	public double getCpuLimit() {
+		return cpuLimit;
+	}
+
+	public void setCpuLimit(double cpuLimit) {
+		this.cpuLimit = cpuLimit;
+	}
+
+	public double getCpuCurrent() {
+		return cpuCurrent;
+	}
+
+	public void setCpuCurrent(double cpuCurrent) {
+		this.cpuCurrent = cpuCurrent;
+	}
+
+	public double getCpuPeak() {
+		return cpuPeak;
+	}
+
+	public void setCpuPeak(double cpuPeak) {
+		this.cpuPeak = cpuPeak;
+	}
+
+	public void setOsVersion(String osVersion) {
+		this.osVersion = osVersion;
+	}
+
+	public void setMemCurrent(double memCurrent) {
+		this.memCurrent = memCurrent;
 	}
 }

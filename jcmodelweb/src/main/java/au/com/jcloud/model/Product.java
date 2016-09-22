@@ -1,8 +1,10 @@
 package au.com.jcloud.model;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 /**
@@ -11,18 +13,30 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "product")
 public class Product extends BaseBeanWithName {
-	protected Category category;
+	protected String description;
+	protected String type;
 	protected BigDecimal costPrice;
 	protected BigDecimal listPrice;
 	protected BigDecimal salePrice;
 	protected Product parent;
 
-	public Category getCategory() {
-		return category;
+	@ManyToMany(mappedBy = "products")
+	protected List<Category> categories;
+
+	public String getDescription() {
+		return description;
 	}
 
-	public void setCategory(Category category) {
-		this.category = category;
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public List<Category> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
 	}
 
 	public BigDecimal getCostPrice() {
@@ -55,5 +69,13 @@ public class Product extends BaseBeanWithName {
 
 	public void setParent(Product parent) {
 		this.parent = parent;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 }
