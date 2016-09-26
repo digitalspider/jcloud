@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -21,6 +22,7 @@ public class Product extends BaseBeanWithName {
 	protected BigDecimal costPrice;
 	protected BigDecimal listPrice;
 	protected BigDecimal salePrice;
+	@Column(columnDefinition = "varchar(5)")
 	protected String currency;
 	protected Product parent;
 

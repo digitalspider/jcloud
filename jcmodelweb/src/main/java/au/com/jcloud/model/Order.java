@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -28,18 +29,19 @@ public class Order extends BaseBean {
 	protected BigDecimal totalSalePrice;
 	protected BigDecimal totalShippingPrice;
 	protected BigDecimal totalPrice;
+	@Column(columnDefinition = "varchar(5)")
 	protected String currency;
 
 	@ManyToOne(optional = false, cascade = CascadeType.ALL)
-	@JoinColumn(name = "billingAddress_id", referencedColumnName = "id")
+	@JoinColumn(name = "billingaddress_id", referencedColumnName = "id")
 	protected Address billingAddress;
 
 	@ManyToOne(optional = false, cascade = CascadeType.ALL)
-	@JoinColumn(name = "shippingAddress_id", referencedColumnName = "id")
+	@JoinColumn(name = "shippingaddress_id", referencedColumnName = "id")
 	protected Address shippingAddress;
 
 	@ManyToOne(optional = false, cascade = CascadeType.ALL)
-	@JoinColumn(name = "creditCard_id", referencedColumnName = "id")
+	@JoinColumn(name = "creditcard_id", referencedColumnName = "id")
 	protected CreditCard creditCard;
 
 	@OneToMany(mappedBy = "order", cascade = CascadeType.PERSIST)
