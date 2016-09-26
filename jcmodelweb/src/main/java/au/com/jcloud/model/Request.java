@@ -23,6 +23,10 @@ public class Request extends BaseBean {
 	@JoinColumn(name = "server_id", referencedColumnName = "id")
 	private Server server;
 
+	@ManyToOne(optional = false, cascade = CascadeType.ALL)
+	@JoinColumn(name = "order_id", referencedColumnName = "id")
+	private Order order;
+
 	public String getTitle() {
 		return title;
 	}
@@ -61,5 +65,13 @@ public class Request extends BaseBean {
 
 	public void setServer(Server server) {
 		this.server = server;
+	}
+
+	public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
 	}
 }

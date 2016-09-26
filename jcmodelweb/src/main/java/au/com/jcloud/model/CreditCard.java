@@ -1,9 +1,12 @@
 package au.com.jcloud.model;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -20,6 +23,9 @@ public class CreditCard extends BaseBean {
 	@ManyToOne(optional = false, cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	protected User user;
+
+	@OneToMany(mappedBy = "creditCard", cascade = CascadeType.PERSIST)
+	protected List<Order> orders;
 
 	@Override
 	public String toString() {
@@ -66,4 +72,11 @@ public class CreditCard extends BaseBean {
 		this.token = token;
 	}
 
+	public List<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
+	}
 }

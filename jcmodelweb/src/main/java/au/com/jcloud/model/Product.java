@@ -3,8 +3,11 @@ package au.com.jcloud.model;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -22,6 +25,12 @@ public class Product extends BaseBeanWithName {
 
 	@ManyToMany(mappedBy = "products")
 	protected List<Category> categories;
+
+	@ManyToMany(mappedBy = "products")
+	protected List<Order> order;
+
+	@OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST)
+	protected List<CartItem> cartItems;
 
 	public String getDescription() {
 		return description;
@@ -77,5 +86,21 @@ public class Product extends BaseBeanWithName {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public List<Order> getOrder() {
+		return order;
+	}
+
+	public void setOrder(List<Order> order) {
+		this.order = order;
+	}
+
+	public List<CartItem> getCartItems() {
+		return cartItems;
+	}
+
+	public void setCartItems(List<CartItem> cartItems) {
+		this.cartItems = cartItems;
 	}
 }

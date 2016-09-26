@@ -40,7 +40,7 @@ public class User extends BaseBean {
 	protected List<Rating> ratings;
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
-	protected List<Purchase> purchases;
+	protected List<Order> orders;
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
 	protected List<Invoice> invoices;
@@ -134,12 +134,12 @@ public class User extends BaseBean {
 		this.ratings = ratings;
 	}
 
-	public List<Purchase> getPurchases() {
-		return purchases;
+	public List<Order> getOrders() {
+		return orders;
 	}
 
-	public void setPurchases(List<Purchase> purchases) {
-		this.purchases = purchases;
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
 	}
 
 	public List<Invoice> getInvoices() {
