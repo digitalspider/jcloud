@@ -1,5 +1,6 @@
 package au.com.jcloud.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +24,11 @@ public class Order extends BaseBean {
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	protected User user;
 	protected Date date;
+	protected BigDecimal totalDiscount;
+	protected BigDecimal totalSalePrice;
+	protected BigDecimal totalShippingPrice;
+	protected BigDecimal totalPrice;
+	protected String currency;
 
 	@ManyToOne(optional = false, cascade = CascadeType.ALL)
 	@JoinColumn(name = "billingAddress_id", referencedColumnName = "id")
@@ -36,17 +42,16 @@ public class Order extends BaseBean {
 	@JoinColumn(name = "creditCard_id", referencedColumnName = "id")
 	protected CreditCard creditCard;
 
-	@ManyToMany
-	@JoinTable(name = "orderproduct", joinColumns = @JoinColumn(name = "order_id", referencedColumnName = "id") , inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id") )
-	protected List<Product> products;
+	@OneToMany(mappedBy = "order", cascade = CascadeType.PERSIST)
+	protected List<OrderProduct> products;
 
-	@OneToMany(mappedBy = "order")
+	@OneToMany(mappedBy = "order", cascade = CascadeType.PERSIST)
 	protected List<Server> servers;
 
-	@OneToMany(mappedBy = "order")
+	@OneToMany(mappedBy = "order", cascade = CascadeType.PERSIST)
 	protected List<Invoice> invoices;
 
-	@OneToOne(mappedBy = "order")
+	@OneToOne(mappedBy = "order", cascade = CascadeType.PERSIST)
 	protected Cart cart;
 
 	@OneToMany(mappedBy = "order", cascade = CascadeType.PERSIST)
@@ -68,11 +73,11 @@ public class Order extends BaseBean {
 		this.date = date;
 	}
 
-	public List<Product> getProducts() {
+	public List<OrderProduct> getProducts() {
 		return products;
 	}
 
-	public void setProducts(List<Product> products) {
+	public void setProducts(List<OrderProduct> products) {
 		this.products = products;
 	}
 
@@ -130,5 +135,45 @@ public class Order extends BaseBean {
 
 	public void setCreditCard(CreditCard creditCard) {
 		this.creditCard = creditCard;
+	}
+
+	public BigDecimal getTotalDiscount() {
+		return totalDiscount;
+	}
+
+	public void setTotalDiscount(BigDecimal totalDiscount) {
+		this.totalDiscount = totalDiscount;
+	}
+
+	public BigDecimal getTotalSalePrice() {
+		return totalSalePrice;
+	}
+
+	public void setTotalSalePrice(BigDecimal totalSalePrice) {
+		this.totalSalePrice = totalSalePrice;
+	}
+
+	public BigDecimal getTotalShippingPrice() {
+		return totalShippingPrice;
+	}
+
+	public void setTotalShippingPrice(BigDecimal totalShippingPrice) {
+		this.totalShippingPrice = totalShippingPrice;
+	}
+
+	public BigDecimal getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(BigDecimal totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
+	public String getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(String currency) {
+		this.currency = currency;
 	}
 }

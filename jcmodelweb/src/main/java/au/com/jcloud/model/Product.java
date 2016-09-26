@@ -21,13 +21,14 @@ public class Product extends BaseBeanWithName {
 	protected BigDecimal costPrice;
 	protected BigDecimal listPrice;
 	protected BigDecimal salePrice;
+	protected String currency;
 	protected Product parent;
 
 	@ManyToMany(mappedBy = "products")
 	protected List<Category> categories;
 
-	@ManyToMany(mappedBy = "products")
-	protected List<Order> order;
+	@OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST)
+	protected List<OrderProduct> orders;
 
 	@OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST)
 	protected List<CartItem> cartItems;
@@ -88,12 +89,12 @@ public class Product extends BaseBeanWithName {
 		this.type = type;
 	}
 
-	public List<Order> getOrder() {
-		return order;
+	public List<OrderProduct> getOrders() {
+		return orders;
 	}
 
-	public void setOrder(List<Order> order) {
-		this.order = order;
+	public void setOrders(List<OrderProduct> order) {
+		this.orders = orders;
 	}
 
 	public List<CartItem> getCartItems() {
@@ -102,5 +103,13 @@ public class Product extends BaseBeanWithName {
 
 	public void setCartItems(List<CartItem> cartItems) {
 		this.cartItems = cartItems;
+	}
+
+	public String getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(String currency) {
+		this.currency = currency;
 	}
 }

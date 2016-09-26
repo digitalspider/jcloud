@@ -1,31 +1,23 @@
 package au.com.jcloud.model;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
  * Created by david.vittor on 17/07/16.
  */
 @Entity
-@Table(name = "cartitem")
-public class CartItem {
+@Table(name = "orderproduct")
+public class OrderProduct {
 
 	protected int quantity;
 
 	@ManyToOne(optional = false, cascade = CascadeType.ALL)
-	@JoinColumn(name = "cart_id", referencedColumnName = "id")
-	protected Cart cart;
+	@JoinColumn(name = "order_id", referencedColumnName = "id")
+	protected Order order;
 
 	@ManyToOne(optional = false, cascade = CascadeType.ALL)
 	@JoinColumn(name = "product_id", referencedColumnName = "id")
@@ -47,11 +39,11 @@ public class CartItem {
 		this.product = product;
 	}
 
-	public Cart getCart() {
-		return cart;
+	public Order getOrder() {
+		return order;
 	}
 
-	public void setCart(Cart cart) {
-		this.cart = cart;
+	public void setOrder(Order order) {
+		this.order = order;
 	}
 }
