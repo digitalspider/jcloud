@@ -27,7 +27,8 @@ public class Cart extends BaseBean {
 	@OneToMany(mappedBy = "cart", cascade = CascadeType.PERSIST)
 	protected List<CartItem> cartItems;
 
-	@OneToOne(mappedBy= "cart")
+	@OneToOne
+	@JoinColumn(name = "order_id")
 	protected Order order;
 
 	@OneToMany(mappedBy = "order")
