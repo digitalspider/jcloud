@@ -1,14 +1,10 @@
 package au.com.jcloud.model;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -28,13 +24,13 @@ public class Cart extends BaseBean {
 	protected List<CartItem> cartItems;
 
 	@OneToOne
-	@JoinColumn(name = "order_id")
-	protected Order order;
+	@JoinColumn(name = "purchase_id")
+	protected Purchase purchase;
 
-	@OneToMany(mappedBy = "order")
+	@OneToMany(mappedBy = "cart")
 	protected Address billingAddress;
 
-	@OneToMany(mappedBy = "order")
+	@OneToMany(mappedBy = "cart")
 	protected Address shippingAddress;
 
 	@OneToMany
@@ -48,12 +44,12 @@ public class Cart extends BaseBean {
 		this.user = user;
 	}
 
-	public Order getOrder() {
-		return order;
+	public Purchase getPurchase() {
+		return purchase;
 	}
 
-	public void setOrder(Order order) {
-		this.order = order;
+	public void setPurchase(Purchase purchase) {
+		this.purchase = purchase;
 	}
 
 	public List<CartItem> getCartItems() {

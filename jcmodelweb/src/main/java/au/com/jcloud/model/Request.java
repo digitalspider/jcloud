@@ -24,8 +24,8 @@ public class Request extends BaseBean {
 	private Server server;
 
 	@ManyToOne(optional = false, cascade = CascadeType.ALL)
-	@JoinColumn(name = "order_id", referencedColumnName = "id")
-	private Order order;
+	@JoinColumn(name = "purchase_id", referencedColumnName = "id")
+	private Purchase purchase;
 
 	public String getTitle() {
 		return title;
@@ -67,11 +67,11 @@ public class Request extends BaseBean {
 		this.server = server;
 	}
 
-	public Order getOrder() {
-		return order;
+	public Purchase getPurchase() {
+		return purchase;
 	}
 
-	public void setOrder(Order order) {
-		this.order = order;
+	public void setPurchase(Purchase purchase) {
+		this.purchase = purchase;
 	}
 }

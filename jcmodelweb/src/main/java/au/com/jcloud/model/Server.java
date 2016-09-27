@@ -44,8 +44,8 @@ public class Server extends BaseBeanWithName {
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	protected User user;
 	@ManyToOne(optional = false, cascade = CascadeType.ALL)
-	@JoinColumn(name = "order_id", referencedColumnName = "id")
-	protected Order order;
+	@JoinColumn(name = "purchase_id", referencedColumnName = "id")
+	protected Purchase purchase;
 
 	@OneToMany(mappedBy = "server", cascade = CascadeType.PERSIST)
 	protected List<Service> services;
@@ -185,12 +185,12 @@ public class Server extends BaseBeanWithName {
 		this.user = user;
 	}
 
-	public Order getOrder() {
-		return order;
+	public Purchase getPurchase() {
+		return purchase;
 	}
 
-	public void setOrder(Order order) {
-		this.order = order;
+	public void setPurchase(Purchase purchase) {
+		this.purchase = purchase;
 	}
 
 	public List<Service> getServices() {

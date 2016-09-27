@@ -8,8 +8,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -19,8 +17,8 @@ import javax.persistence.Table;
  * Created by david.vittor on 17/07/16.
  */
 @Entity
-@Table(name = "order")
-public class Order extends BaseBean {
+@Table(name = "purchase")
+public class Purchase extends BaseBean {
 	@ManyToOne(optional = false, cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	protected User user;
@@ -44,19 +42,19 @@ public class Order extends BaseBean {
 	@JoinColumn(name = "creditcard_id", referencedColumnName = "id")
 	protected CreditCard creditCard;
 
-	@OneToMany(mappedBy = "order", cascade = CascadeType.PERSIST)
-	protected List<OrderProduct> products;
+	@OneToMany(mappedBy = "purchase", cascade = CascadeType.PERSIST)
+	protected List<PurchaseProduct> products;
 
-	@OneToMany(mappedBy = "order", cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy = "purchase", cascade = CascadeType.PERSIST)
 	protected List<Server> servers;
 
-	@OneToMany(mappedBy = "order", cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy = "purchase", cascade = CascadeType.PERSIST)
 	protected List<Invoice> invoices;
 
-	@OneToOne(mappedBy = "order", cascade = CascadeType.PERSIST)
+	@OneToOne(mappedBy = "purchase", cascade = CascadeType.PERSIST)
 	protected Cart cart;
 
-	@OneToMany(mappedBy = "order", cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy = "purchase", cascade = CascadeType.PERSIST)
 	protected List<Request> requests;
 
 	public User getUser() {
@@ -75,11 +73,11 @@ public class Order extends BaseBean {
 		this.date = date;
 	}
 
-	public List<OrderProduct> getProducts() {
+	public List<PurchaseProduct> getProducts() {
 		return products;
 	}
 
-	public void setProducts(List<OrderProduct> products) {
+	public void setProducts(List<PurchaseProduct> products) {
 		this.products = products;
 	}
 

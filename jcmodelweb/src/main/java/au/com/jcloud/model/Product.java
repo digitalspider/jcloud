@@ -7,7 +7,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -30,7 +29,7 @@ public class Product extends BaseBeanWithName {
 	protected List<Category> categories;
 
 	@OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST)
-	protected List<OrderProduct> orders;
+	protected List<PurchaseProduct> purchases;
 
 	@OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST)
 	protected List<CartItem> cartItems;
@@ -91,12 +90,12 @@ public class Product extends BaseBeanWithName {
 		this.type = type;
 	}
 
-	public List<OrderProduct> getOrders() {
-		return orders;
+	public List<PurchaseProduct> getPurchases() {
+		return purchases;
 	}
 
-	public void setOrders(List<OrderProduct> order) {
-		this.orders = orders;
+	public void setPurchases(List<PurchaseProduct> purchases) {
+		this.purchases = purchases;
 	}
 
 	public List<CartItem> getCartItems() {

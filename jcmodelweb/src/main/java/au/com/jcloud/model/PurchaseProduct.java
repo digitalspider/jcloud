@@ -10,14 +10,14 @@ import javax.persistence.Table;
  * Created by david.vittor on 17/07/16.
  */
 @Entity
-@Table(name = "orderproduct")
-public class OrderProduct {
+@Table(name = "purchaseproduct")
+public class PurchaseProduct {
 
 	protected int quantity;
 
 	@ManyToOne(optional = false, cascade = CascadeType.ALL)
-	@JoinColumn(name = "order_id", referencedColumnName = "id")
-	protected Order order;
+	@JoinColumn(name = "purchase_id", referencedColumnName = "id")
+	protected Purchase purchase;
 
 	@ManyToOne(optional = false, cascade = CascadeType.ALL)
 	@JoinColumn(name = "product_id", referencedColumnName = "id")
@@ -39,11 +39,11 @@ public class OrderProduct {
 		this.product = product;
 	}
 
-	public Order getOrder() {
-		return order;
+	public Purchase getPurchase() {
+		return purchase;
 	}
 
-	public void setOrder(Order order) {
-		this.order = order;
+	public void setPurchase(Purchase purchase) {
+		this.purchase = purchase;
 	}
 }

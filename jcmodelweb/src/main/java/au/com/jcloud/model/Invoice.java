@@ -18,8 +18,8 @@ import javax.persistence.Table;
 @Table(name = "invoice")
 public class Invoice extends BaseBean {
 	@ManyToOne(optional = false, cascade = CascadeType.ALL)
-	@JoinColumn(name = "order_id", referencedColumnName = "id")
-	protected Order order;
+	@JoinColumn(name = "purchase_id", referencedColumnName = "id")
+	protected Purchase purchase;
 	@ManyToOne(optional = false, cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	protected User user;
@@ -32,12 +32,12 @@ public class Invoice extends BaseBean {
 	@OneToMany(mappedBy = "invoice", cascade = CascadeType.PERSIST)
 	protected List<InvoiceLine> invoiceLines;
 
-	public Order getOrder() {
-		return order;
+	public Purchase getPurchase() {
+		return purchase;
 	}
 
-	public void setOrder(Order order) {
-		this.order = order;
+	public void setPurchase(Purchase purchase) {
+		this.purchase = purchase;
 	}
 
 	public User getUser() {

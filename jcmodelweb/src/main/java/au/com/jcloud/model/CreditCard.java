@@ -25,7 +25,7 @@ public class CreditCard extends BaseBean {
 	protected User user;
 
 	@OneToMany(mappedBy = "creditCard", cascade = CascadeType.PERSIST)
-	protected List<Order> orders;
+	protected List<Purchase> purchases;
 
 	@Override
 	public String toString() {
@@ -72,11 +72,11 @@ public class CreditCard extends BaseBean {
 		this.token = token;
 	}
 
-	public List<Order> getOrders() {
-		return orders;
+	public List<Purchase> getPurchases() {
+		return purchases;
 	}
 
-	public void setOrders(List<Order> orders) {
-		this.orders = orders;
+	public void setPurchases(List<Purchase> purchases) {
+		this.purchases = purchases;
 	}
 }

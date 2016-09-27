@@ -25,7 +25,7 @@ public class Address extends BaseBean {
 	protected User user;
 
 	@OneToMany(mappedBy = "shippingAddress", cascade = CascadeType.PERSIST)
-	protected List<Order> orders;
+	protected List<Purchase> purchases;
 
 	@Override
 	public String toString() {
@@ -72,11 +72,11 @@ public class Address extends BaseBean {
 		this.user = user;
 	}
 
-	public List<Order> getOrders() {
-		return orders;
+	public List<Purchase> getPurchases() {
+		return purchases;
 	}
 
-	public void setOrders(List<Order> orders) {
-		this.orders = orders;
+	public void setPurchases(List<Purchase> purchases) {
+		this.purchases = purchases;
 	}
 }
