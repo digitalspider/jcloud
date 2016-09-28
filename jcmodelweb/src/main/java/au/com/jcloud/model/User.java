@@ -45,6 +45,9 @@ public class User extends BaseBean {
 	@OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
 	protected List<Invoice> invoices;
 
+	@OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
+	protected List<Cart> carts;
+
 	@Override
 	public String toString() {
 		return super.toString() + " username=" + username + " email=" + email + " firstName=" + firstName + " lastName=" + lastName;
@@ -148,5 +151,13 @@ public class User extends BaseBean {
 
 	public void setInvoices(List<Invoice> invoices) {
 		this.invoices = invoices;
+	}
+
+	public List<Cart> getCarts() {
+		return carts;
+	}
+
+	public void setCarts(List<Cart> carts) {
+		this.carts = carts;
 	}
 }
