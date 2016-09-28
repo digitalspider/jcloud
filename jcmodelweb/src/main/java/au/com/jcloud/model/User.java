@@ -50,7 +50,7 @@ public class User extends BaseBean {
 
 	@Override
 	public String toString() {
-		return super.toString() + " username=" + username + " email=" + email + " firstName=" + firstName + " lastName=" + lastName;
+		return super.toString() + " username=" + username + " email=" + email + " name=" + getFullName();
 	}
 
 	public String getFullName() {
