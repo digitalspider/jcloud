@@ -25,8 +25,13 @@ public class DelimiterConstants {
 	public static final String EQUALS = "=";
 	public static final String TILDA = "~";
 	public static final String APOSTRAPHE = "`";
+	public static final String CARRIAGE_RETRUN = "\r";
+	public static final String NEWLINE = "\n";
+	public static final String TAB = "\t";
 	public static final String QUOTE_DOUBLE = "\"";
+	public static final String QUOTE_DOUBLE_TWO = "\"\"";
 	public static final String QUOTE_SINGLE = "'";
+	public static final String QUOTE_SINGLE_TWO = "''";
 	public static final String BRACKET_ROUND_OPEN = "(";
 	public static final String BRACKET_ROUND_CLOSE = ")";
 	public static final String BRACKET_SQUARE_OPEN = "[";
