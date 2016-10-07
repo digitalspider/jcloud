@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -132,9 +133,9 @@ public class DatabaseUtils {
 				result = mapping.mapRow(rs);
 			}
 		} finally {
-			DBConnection.close(rs, stmt);
+			close(rs, stmt);
 			if (closeConnection) {
-				DBConnection.close(conn);
+				close(conn);
 			}
 		}
 		return result;
@@ -180,9 +181,9 @@ public class DatabaseUtils {
 				}
 			}
 		} finally {
-			DBConnection.close(rs, stmt);
+			close(rs, stmt);
 			if (closeConnection) {
-				DBConnection.close(conn);
+				close(conn);
 			}
 		}
 		return resultList;
@@ -213,9 +214,9 @@ public class DatabaseUtils {
 			mapping.mapParams(object, stmt);
 			result = stmt.executeUpdate();
 		} finally {
-			DBConnection.close(stmt);
+			close(stmt);
 			if (closeConnection) {
-				DBConnection.close(conn);
+				close(conn);
 			}
 		}
 		return result;
@@ -248,9 +249,9 @@ public class DatabaseUtils {
 			}
 			stmt.executeBatch();
 		} finally {
-			DBConnection.close(stmt, conn);
+			close(stmt, conn);
 			if (closeConnection) {
-				DBConnection.close(conn);
+				close(conn);
 			}
 		}
 	}

@@ -1,5 +1,7 @@
 package au.com.jcloud.util;
 
+import java.util.Collection;
+
 /**
  * Created by david on 07/10/16.
  */
