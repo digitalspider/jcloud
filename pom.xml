@@ -21,6 +21,7 @@
 		<module>jcbatch</module>
 		<module>jcmodel</module>
 		<module>jcmodelweb</module>
+		<module>jcsite</module>
 	</modules>
 	
 	<organization>
