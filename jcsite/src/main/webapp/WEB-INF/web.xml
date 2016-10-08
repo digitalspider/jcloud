@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="JavaCloud_Site" version="2.5">
+
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/classes/spring.xml</param-value>
+	</context-param>
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<filter>
+		<filter-name>StripesFilter</filter-name>
+		<filter-class>net.sourceforge.stripes.controller.StripesFilter</filter-class>
+		<init-param>
+			<param-name>ActionResolver.Packages</param-name>
+			<param-value>au.com.jcloud.actionbean</param-value>
+		</init-param>
+		<init-param>
+			<param-name>Extension.Packages</param-name>
+			<param-value>
+				net.sourceforge.stripes.integration.spring,
+				net.sourceforge.stripes.extensions,
+				org.stripesstuff.plugin.security,
+				au.com.jcloud.security,
+				au.com.jcloud.context
+			</param-value>
+		</init-param>
+		<init-param>
+			<param-name>ActionBeanContext.Class</param-name>
+			<param-value>au.com.jcloud.context.JCActionBeanContext</param-value>
+		</init-param>
+		<init-param>
+			<param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+			<param-value>StripesResources</param-value>
+		</init-param>
+		<init-param>
+			<param-name>SecurityManager.Class</param-name>
+			<param-value>org.stripesstuff.plugin.security.J2EESecurityManager</param-value>
+		</init-param>
+	</filter>
+	
+	<!-- Clickjack filter configured to DENY - sort out order of filters! 
+	<filter>
+		<filter-name>Clickjack Filter Deny</filter-name>
+		<filter-class>au.com.jcloud.filter.ClickjackFilter</filter-class>
+		<init-param>
+			<param-name>mode</param-name>
+			<param-value>DENY</param-value>
+		</init-param>
+	</filter>
+	-->
+	
+	<!-- Clickjack filter configured to SAMEORIGIN -->
+	<filter>
+		<filter-name>Clickjack Filter Same Origin</filter-name>
+		<filter-class>au.com.jcloud.filter.ClickjackFilter</filter-class>
+		<init-param>
+			<param-name>mode</param-name>
+			<param-value>SAMEORIGIN</param-value>
+		</init-param>
+		<init-param>
+            <param-name>excludePath</param-name>
+            <param-value>\/public.*</param-value>
+        </init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>StripesFilter</filter-name>
+		<url-pattern>*.jsp</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>StripesFilter</filter-name>
+		<servlet-name>StripesDispatcher</servlet-name>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+
+	<servlet>
+		<servlet-name>StripesDispatcher</servlet-name>
+		<servlet-class>net.sourceforge.stripes.controller.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>StripesDispatcher</servlet-name>
+		<url-pattern>*.action</url-pattern>
+		<url-pattern>/secure/*</url-pattern>
+		<url-pattern>/rest/*</url-pattern>
+		<url-pattern>/public/*</url-pattern>
+		<url-pattern>/admin/*</url-pattern>
+	</servlet-mapping>
+
+	<!--
+	<login-config>
+		<auth-method>FORM</auth-method>
+		<form-login-config>
+			<form-login-page>/login.jsp</form-login-page>
+			<form-error-page>/login.jsp?failed=1</form-error-page>
+		</form-login-config>
+	</login-config>
+
+	<security-role>
+		<role-name>user</role-name>
+	</security-role>
+
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>security</web-resource-name>
+			<url-pattern>/secure/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>user</role-name>
+		</auth-constraint>
+	</security-constraint>
+	-->
+</web-app>

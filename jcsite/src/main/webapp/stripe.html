@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
+  <script src="js/jquery.payment.js"></script>
+  <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+  <script type="text/javascript">
+    Stripe.setPublishableKey('pk_test_ecxPFdQHDEFk3Jn3GZpVO4Lj');
+  </script>
+<script>
+function stripeResponseHandler(status, response) {
+  // Grab the form:
+  var $form = $('#payment-form');
+
+  if (response.error) {
+    $form.find('.payment-errors').text(response.error.message);
+    $form.find('.submit').prop('disabled', false); // Re-enable submission
+  } else {
+    // Get the token ID:
+    var token = response.id;
+
+    // Insert the token ID into the form so it gets submitted to the server:
+    $form.append($('<input type="hidden" name="stripeToken">').val(token));
+
+    // Submit the form:
+    $form.get(0).submit();
+  }
+};
+</script>
+
+  <style type="text/css" media="screen">
+    .has-error input {
+      border-width: 2px;
+    }
+    .validation.text-danger:after {
+      content: 'Validation failed';
+    }
+    .validation.text-success:after {
+      content: 'Validation passed';
+    }
+  </style>
+
+  <script>
+    jQuery(function($) {
+      $('[data-numeric]').payment('restrictNumeric');
+      $('.cc-number').payment('formatCardNumber');
+      $('.cc-exp').payment('formatCardExpiry');
+      $('.cc-cvc').payment('formatCardCVC');
+      $.fn.toggleInputError = function(erred) {
+        this.parent('.form-group').toggleClass('has-error', erred);
+        return this;
+      };
+      $('form').submit(function(e) {
+        e.preventDefault();
+        var cardType = $.payment.cardType($('.cc-number').val());
+        $('.cc-number').toggleInputError(!$.payment.validateCardNumber($('.cc-number').val()));
+        $('.cc-exp').toggleInputError(!$.payment.validateCardExpiry($('.cc-exp').payment('cardExpiryVal')));
+        $('.cc-cvc').toggleInputError(!$.payment.validateCardCVC($('.cc-cvc').val(), cardType));
+        $('.cc-brand').text(cardType);
+        $('.validation').removeClass('text-danger text-success');
+        $('.validation').addClass($('.has-error').length ? 'text-danger' : 'text-success');
+
+        if ($('.has-error').length>0) {
+            var expiry = $('.cc-exp').val().split('/');
+            $('#cc-exp-month').val(expiry[0].trim());
+            $('#cc-exp-year').val(expiry[1].trim());
+            var $form = $('#payment-form');
+            // Disable the submit button to prevent repeated clicks:
+            $form.find('.submit').prop('disabled', true);
+
+            // Request a token from Stripe:
+			Stripe.card.createToken($form, stripeResponseHandler);
+        }
+        // Prevent the form from being submitted:
+        return false;
+      });
+    });
+  </script>
+
+</head>
+<body>
+  <div class="container">
+    <h1>
+      jquery.payment demo
+      <small><a class="btn btn-info btn-xs" href="https://github.com/stripe/jquery.payment">Fork on GitHub</a></small>
+    </h1>
+    <p>A general purpose library for building credit card forms, validating inputs and formatting numbers.</p>
+    <form action="/your-charge-code" method="POST" id="payment-form" novalidate autocomplete="on">
+      <span class="payment-errors"></span>
+      <input id="cc-exp-month" data-stripe="exp_month" type="hidden"/>
+      <input id="cc-exp-year" data-stripe="exp_year" type="hidden"/>
+      <div class="form-group">
+        <label for="cc-number" class="control-label">Card number formatting <small class="text-muted">[<span class="cc-brand"></span>]</small></label>
+        <input data-stripe="number" id="cc-number" type="tel" class="input-lg form-control cc-number" autocomplete="cc-number" placeholder="1234 5678 9012 3456" required>
+      </div>
+
+      <div class="form-group">
+        <label for="cc-exp" class="control-label">Card expiry formatting</label>
+        <input id="cc-exp" type="tel" class="input-lg form-control cc-exp" autocomplete="cc-exp" placeholder="01 / 16" required>
+      </div>
+
+      <div class="form-group">
+        <label for="cc-cvc" class="control-label">Card CVC formatting</label>
+        <input data-stripe="cvc" id="cc-cvc" type="tel" class="input-lg form-control cc-cvc" autocomplete="off" placeholder="111" required>
+      </div>
+
+      <div class="form-group">
+        <label for="numeric" class="control-label">Restrict numeric</label>
+        <input id="numeric" type="tel" class="input-lg form-control" data-numeric>
+      </div>
+
+      <button type="submit" class="btn btn-lg btn-primary">SubmitPayment</button>
+
+      <h2 class="validation"></h2>
+    </form>
+  </div>
+</body>
+</html>

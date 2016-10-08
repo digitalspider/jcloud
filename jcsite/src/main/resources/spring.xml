@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<bean name="tokenService" class="au.com.jcloud.service.TokenService"/>
+	<bean name="encryptService" class="au.com.jcloud.service.EncryptService"/>
+	<bean name="formSubmissionCountService" class="au.com.jcloud.service.FormSubmissionCountService"/>
+	<bean name="userService" class="au.com.jcloud.service.UserService">
+		<property name="encryptService" ref="encryptService"/>
+	</bean>
+	<bean name="emailService" class="au.com.jcloud.service.EmailService"/>
+</beans>
