@@ -7,8 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-import au.com.booktopia.common.beans.IdBeanIF;
-
 /**
  * Handle common database functions, using the {@link StatementParameterMapping}.
  *
