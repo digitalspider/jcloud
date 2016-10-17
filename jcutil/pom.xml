@@ -78,7 +78,14 @@
         </plugins>
     </build>
 
-	<dependencies>	
+	<dependencies>
+		<!-- MQtt Client Library -->
+		<dependency>
+			<groupId>org.eclipse.paho</groupId>
+			<artifactId>mqtt-client</artifactId>
+			<version>0.4.0</version>
+		</dependency>
+
 		<!-- GSon library -->
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
