@@ -1,11 +1,11 @@
-package au.com.booktopia.utils.db;
+package au.com.jcloud.util.db;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -154,6 +154,7 @@ public class DatabaseUtils {
 	 * @param conn
 	 * @param sql
 	 * @param mapping
+	 * @param closeConnection
 	 * @param params
 	 * @return
 	 * @throws SQLException
@@ -190,28 +191,70 @@ public class DatabaseUtils {
 	}
 
 	/**
-	 * See {@link #executeUpdateQuery(Connection, String, Object, StatementMapping, boolean)} with default closeConnection=false
+	 * See {@link #executeInsertQuery(Connection, String, boolean, Object...)} with default closeConnection=false
 	 */
-	public static <T> int executeUpdateQuery(Connection conn, String sql, T object, StatementParameterMapping<T> mapping) throws SQLException {
-		return executeUpdateQuery(conn, sql, object, mapping, false);
+	public static long executeInsertQuery(Connection conn, String sql, Object... params) throws SQLException {
+		return executeInsertQuery(conn, sql, false, params);
 	}
 
 	/**
-	 * Execute an update query, populating the Statement using a {@link StatementMapping}
+	 * Execute an insert query with a given list of parameters and return the new id created
 	 *
 	 * @param conn
 	 * @param sql
-	 * @param object
-	 * @param mapping
+	 * @param closeConnection
+	 * @param params
+	 * @throws SQLException
+	 */
+	public static long executeInsertQuery(Connection conn, String sql, boolean closeConnection, Object... params) throws SQLException {
+		PreparedStatement stmt = null;
+		long newId = 0;
+		try {
+			stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			int i=0;
+			for (Object param : params) {
+				setStatementParameterByType(stmt, ++i, param);
+			}
+			stmt.executeUpdate();
+			ResultSet rs = stmt.getGeneratedKeys();
+			if (rs.next()) {
+				newId = rs.getLong(1);
+			}
+		} finally {
+			close(stmt, conn);
+			if (closeConnection) {
+				close(conn);
+			}
+		}
+		return newId;
+	}
+
+	/**
+	 * See {@link #executeUpdateQuery(Connection, String, boolean, Object...)} with default closeConnection=false
+	 */
+	public static <T> int executeUpdateQuery(Connection conn, String sql, Object... params) throws SQLException {
+		return executeUpdateQuery(conn, sql, false, params);
+	}
+
+	/**
+	 * Execute a SQL update query with a list of parameters.
+	 *
+	 * @param conn
+	 * @param sql
+	 * @param closeConnection
+	 * @param params
 	 * @return
 	 * @throws SQLException
 	 */
-	public static <T> int executeUpdateQuery(Connection conn, String sql, T object, StatementParameterMapping<T> mapping, boolean closeConnection) throws SQLException {
+	public static <T> int executeUpdateQuery(Connection conn, String sql, boolean closeConnection, Object... params) throws SQLException {
 		PreparedStatement stmt = null;
 		int result = 0;
 		try {
 			stmt = conn.prepareStatement(sql);
-			mapping.mapParams(object, stmt);
+			int i=0;
+			for (Object param : params) {
+				setStatementParameterByType(stmt, ++i, param);
+			}
 			result = stmt.executeUpdate();
 		} finally {
 			close(stmt);
@@ -223,40 +266,6 @@ public class DatabaseUtils {
 	}
 
 	/**
-	 * See {@link #executeUpdateQuery(Connection, String, List, StatementMapping, boolean)} with default closeConnection=false
-	 */
-	public static <T> void executeUpdateQuery(Connection conn, String sql, List<T> object, StatementParameterMapping<T> mapping) throws SQLException {
-		executeUpdateQuery(conn, sql, object, mapping, false);
-	}
-
-	/**
-	 * Execute an update query on a list of objects, populating the Statement using a {@link StatementMapping}
-	 *
-	 * @param conn
-	 * @param sql
-	 * @param objectList
-	 * @param mapping
-	 * @param closeConnection
-	 * @throws SQLException
-	 */
-	public static <T> void executeUpdateQuery(Connection conn, String sql, List<T> objectList, StatementParameterMapping<T> mapping, boolean closeConnection) throws SQLException {
-		PreparedStatement stmt = null;
-		try {
-			stmt = conn.prepareStatement(sql);
-			for (T object : objectList) {
-				mapping.mapParams(object, stmt);
-				stmt.addBatch();
-			}
-			stmt.executeBatch();
-		} finally {
-			close(stmt, conn);
-			if (closeConnection) {
-				close(conn);
-			}
-		}
-	}
-
-	/**
 	 * Set a statement parameter given a generic object, at location index.
 	 *
 	 * @param stmt
@@ -265,7 +274,10 @@ public class DatabaseUtils {
 	 * @throws SQLException
 	 */
 	private static void setStatementParameterByType(PreparedStatement stmt, int index, Object param) throws SQLException {
-		if (param instanceof String) {
+		if (param == null) {
+			stmt.setString(index, (String) param);
+		}
+		else if (param instanceof String) {
 			stmt.setString(index, (String) param);
 		}
 		else if (param instanceof Boolean) {
@@ -287,7 +299,7 @@ public class DatabaseUtils {
 			stmt.setBigDecimal(index, (BigDecimal) param);
 		}
 		else {
-			throw new SQLException("Unknown class of type: " + (param != null ? param.getClass().getSimpleName() : "null"));
+			throw new SQLException("Unknown class of type: " + param.getClass().getSimpleName());
 		}
 	}
 }
