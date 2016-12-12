@@ -56,7 +56,7 @@ public class Cart extends BaseBean {
 		return cartItems;
 	}
 
-	public void setCartItems(List<CartItem> products) {
+	public void setCartItems(List<CartItem> cartItems) {
 		this.cartItems = cartItems;
 	}
 

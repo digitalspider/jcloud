@@ -70,7 +70,7 @@ String username = request.getRemoteUser();
 						<c:forEach var="product" items="${actionBean.products}">
 							<div id="${product.id}" class="product-item">
 							 	<div id="button" class="tm-btn text-uppercase">${product.name} - \$${product.listPrice}</div>
-								<div id="description" ${product.description}</div>
+								<div id="description">${product.description}</div>
 							</div>
 						</c:forEach>
 					</div>
