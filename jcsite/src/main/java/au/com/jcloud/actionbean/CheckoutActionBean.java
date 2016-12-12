@@ -13,7 +13,6 @@ import java.util.List;
 import javax.annotation.security.PermitAll;
 
 import com.avaje.ebean.Ebean;
-import com.avaje.ebean.FetchConfig;
 
 import au.com.jcloud.enums.Status;
 import au.com.jcloud.model.Address;
@@ -98,16 +97,6 @@ public class CheckoutActionBean extends JCSecureActionBean {
 		if (cart.getCartItems()==null) {
 			cart.setCartItems(new ArrayList<CartItem>());
 		}
-		CartItem cartItem1 = cart.getCartItems().get(0);
-		LOG.info("cart=" + cart+" items="+cart.getCartItems().size()+" cdate="+cart.getCdate()+" mdate="+cart.getMdate());
-		LOG.info("billAdd="+cart.getBillingAddress()+" user="+cart.getUser()+" cc="+cart.getCreditCard()+" pur="+cart.getPurchase()+" shipAdd="+cart.getShippingAddress());
-		LOG.info("cartItem="+cartItem1);
-		LOG.info("cartItem.cart="+cartItem1.getCart());
-		LOG.info("cartItem.product="+cartItem1.getProduct());
-		LOG.info("cartItem.quantity="+cartItem1.getQuantity());
-		Ebean.save(cart.getUser());
-		Ebean.save(cartItem1);
-		Ebean.save(cart);
 
 		PathParts pathParts = getPathParts(); // 0=checkout, 1=add, 2=123 (productId), 3=description
 		LOG.info("pathParts=" + pathParts);

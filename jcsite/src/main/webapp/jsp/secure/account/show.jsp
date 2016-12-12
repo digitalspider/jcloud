@@ -75,7 +75,7 @@ String username = request.getRemoteUser();
 					</div>
                 </div>
                 <div class="row">
-					<a href="${ctx}/secure/account/edit" id="edit" name="edit" value="edit" class="tm-btn text-uppercase">EDIT</a>
+					<a href="${ctx}/secure/account/edit" id="edit" class="tm-btn text-uppercase">EDIT</a>
 				</div>
             </div>
         </section>

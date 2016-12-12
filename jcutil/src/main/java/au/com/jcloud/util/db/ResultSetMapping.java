@@ -1,4 +1,4 @@
-package au.com.booktopia.utils.db;
+package au.com.jcloud.util.db;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

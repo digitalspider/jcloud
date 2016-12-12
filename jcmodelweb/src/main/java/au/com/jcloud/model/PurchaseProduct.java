@@ -11,7 +11,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "purchaseproduct")
-public class PurchaseProduct {
+public class PurchaseProduct extends IdBean {
 
 	protected int quantity;
 

@@ -1,17 +1,9 @@
 package au.com.jcloud.model;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -19,7 +11,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "cartitem")
-public class CartItem {
+public class CartItem extends IdBean {
 
 	protected int quantity;
 
