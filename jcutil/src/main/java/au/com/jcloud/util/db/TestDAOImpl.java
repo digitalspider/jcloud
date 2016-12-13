@@ -15,67 +15,67 @@ public class TestDAOImpl {
 		this.connection = connection;
 	}
 
-	public TestBean getBrand(long id) throws SQLException {
-		String sql = "SELECT UIDPK, TEST_NAME, TEST_IMAGE FROM TBRAND WHERE UIDPK = ?";
-		TestBean brand = DatabaseUtils.executeQuerySingle(getConnection(), sql, new BrandResultSetMapping(), id);
-		return brand;
+	public TestBean getTest(long id) throws SQLException {
+		String sql = "SELECT UIDPK, TEST_NAME, TEST_IMAGE FROM TEST WHERE UIDPK = ?";
+		TestBean test = DatabaseUtils.executeQuerySingle(getConnection(), sql, new TestResultSetMapping(), id);
+		return test;
 	}
 
-	public TestBean getBrandByBrandName(String brandName) throws SQLException {
-		String sql = "SELECT UIDPK, TEST_NAME, TEST_IMAGE FROM TBRAND WHERE TEST_NAME = ?";
-		TestBean brand = DatabaseUtils.executeQuerySingle(getConnection(), sql, new BrandResultSetMapping(), brandName);
-		return brand;
+	public TestBean getTestByTestName(String testName) throws SQLException {
+		String sql = "SELECT UIDPK, TEST_NAME, TEST_IMAGE FROM TEST WHERE TEST_NAME = ?";
+		TestBean test = DatabaseUtils.executeQuerySingle(getConnection(), sql, new TestResultSetMapping(), testName);
+		return test;
 	}
 
 	public List<TestBean> getAllTest() throws SQLException {
-		String sql = "SELECT UIDPK, TEST_NAME, TEST_IMAGE FROM TBRAND";
-		List<TestBean> brandList = DatabaseUtils.executeQueryList(getConnection(), sql, new BrandResultSetMapping());
-		return brandList;
+		String sql = "SELECT UIDPK, TEST_NAME, TEST_IMAGE FROM TEST";
+		List<TestBean> testList = DatabaseUtils.executeQueryList(getConnection(), sql, new TestResultSetMapping());
+		return testList;
 	}
 
 	public TestBean create(String testName, String testImage) throws SQLException {
-		String sql = "INSERT INTO TBRAND (TEST_NAME, TEST_IMAGE) VALUES (?,?)";
+		String sql = "INSERT INTO TEST (TEST_NAME, TEST_IMAGE) VALUES (?,?)";
 		long newId = DatabaseUtils.executeInsertQuery(getConnection(), sql, testName, testImage);
-		TestBean brand = new TestBean();
-		brand.setTestName(testName);
-		brand.setTestImage(testImage);
-		brand.setId(newId);
-		return brand;
+		TestBean test = new TestBean();
+		test.setTestName(testName);
+		test.setTestImage(testImage);
+		test.setId(newId);
+		return test;
 	}
 
 	public TestBean create(TestBean test) throws SQLException {
-		String sql = "INSERT INTO TBRAND (TEST_NAME, TEST_IMAGE) VALUES (?,?)";
+		String sql = "INSERT INTO TEST (TEST_NAME, TEST_IMAGE) VALUES (?,?)";
 		test = DatabaseUtils.executeInsertQuery(getConnection(), sql, test, new TestStatementMapping());
 		return test;
 	}
 
 	public void update(TestBean test) throws SQLException {
-		String sql = "UPDATE TBRAND SET TEST_NAME=?, TEST_IMAGE=? WHERE UIDPK=?";
+		String sql = "UPDATE TEST SET TEST_NAME=?, TEST_IMAGE=? WHERE UIDPK=?";
 		DatabaseUtils.executeUpdateQuery(getConnection(), sql, test, new TestStatementMapping());
 	}
 
-	public void update(Collection<TestBean> brandList) throws SQLException {
+	public void update(Collection<TestBean> testList) throws SQLException {
 		String sql = "UPDATE TEST SET TEST_NAME=?, TEST_IMAGE=? WHERE UIDPK=?";
-		DatabaseUtils.executeUpdateQuery(getConnection(), sql, brandList, new TestStatementMapping());
+		DatabaseUtils.executeUpdateQuery(getConnection(), sql, testList, new TestStatementMapping());
 	}
 
-	private class BrandResultSetMapping implements ResultSetMapping<TestBean> {
+	private class TestResultSetMapping implements ResultSetMapping<TestBean> {
 		@Override
 		public TestBean mapRow(ResultSet rs) throws SQLException {
-			TestBean brand = new TestBean();
-			brand.setId(rs.getLong("UIDPK"));
-			brand.setTestName(rs.getString("TEST_NAME"));
-			brand.setTestImage(rs.getString("TEST_IMAGE"));
-			return brand;
+			TestBean test = new TestBean();
+			test.setId(rs.getLong("UIDPK"));
+			test.setTestName(rs.getString("TEST_NAME"));
+			test.setTestImage(rs.getString("TEST_IMAGE"));
+			return test;
 		}
 	}
 
 	private class TestStatementMapping implements StatementParameterMapping<TestBean> {
 		@Override
-		public int mapParams(TestBean brand, PreparedStatement stmt) throws SQLException {
+		public int mapParams(TestBean test, PreparedStatement stmt) throws SQLException {
 			int i = 0;
-			stmt.setString(++i, brand.getTestName());
-			stmt.setString(++i, brand.getTestImage());
+			stmt.setString(++i, test.getTestName());
+			stmt.setString(++i, test.getTestImage());
 			return ++i;
 		}
 	}
