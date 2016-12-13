@@ -9,6 +9,10 @@ import java.util.List;
 
 public class TestDAOImpl {
 
+	private static final String SELECT_QUERY = "SELECT UIDPK, TEST_NAME, TEST_IMAGE FROM TEST";
+	private static final String INSERT_QUERY = "INSERT INTO TEST (TEST_NAME, TEST_IMAGE) VALUES (?,?)";
+	private static final String UPDATE_QUERY = "UPDATE TEST SET TEST_NAME=?, TEST_IMAGE=? WHERE UIDPK=?";
+
 	private Connection connection;
 
 	public TestDAOImpl(Connection connection) {
@@ -16,25 +20,25 @@ public class TestDAOImpl {
 	}
 
 	public TestBean getTest(long id) throws SQLException {
-		String sql = "SELECT UIDPK, TEST_NAME, TEST_IMAGE FROM TEST WHERE UIDPK = ?";
+		String sql = SELECT_QUERY + " WHERE UIDPK = ?";
 		TestBean test = DatabaseUtils.executeQuerySingle(getConnection(), sql, new TestResultSetMapping(), id);
 		return test;
 	}
 
 	public TestBean getTestByTestName(String testName) throws SQLException {
-		String sql = "SELECT UIDPK, TEST_NAME, TEST_IMAGE FROM TEST WHERE TEST_NAME = ?";
+		String sql = SELECT_QUERY + " WHERE TEST_NAME = ?";
 		TestBean test = DatabaseUtils.executeQuerySingle(getConnection(), sql, new TestResultSetMapping(), testName);
 		return test;
 	}
 
 	public List<TestBean> getAllTest() throws SQLException {
-		String sql = "SELECT UIDPK, TEST_NAME, TEST_IMAGE FROM TEST";
+		String sql = SELECT_QUERY;
 		List<TestBean> testList = DatabaseUtils.executeQueryList(getConnection(), sql, new TestResultSetMapping());
 		return testList;
 	}
 
 	public TestBean create(String testName, String testImage) throws SQLException {
-		String sql = "INSERT INTO TEST (TEST_NAME, TEST_IMAGE) VALUES (?,?)";
+		String sql = INSERT_QUERY;
 		long newId = DatabaseUtils.executeInsertQuery(getConnection(), sql, testName, testImage);
 		TestBean test = new TestBean();
 		test.setTestName(testName);
@@ -44,18 +48,18 @@ public class TestDAOImpl {
 	}
 
 	public TestBean create(TestBean test) throws SQLException {
-		String sql = "INSERT INTO TEST (TEST_NAME, TEST_IMAGE) VALUES (?,?)";
+		String sql = INSERT_QUERY;
 		test = DatabaseUtils.executeInsertQuery(getConnection(), sql, test, new TestStatementMapping());
 		return test;
 	}
 
 	public void update(TestBean test) throws SQLException {
-		String sql = "UPDATE TEST SET TEST_NAME=?, TEST_IMAGE=? WHERE UIDPK=?";
+		String sql = UPDATE_QUERY;
 		DatabaseUtils.executeUpdateQuery(getConnection(), sql, test, new TestStatementMapping());
 	}
 
 	public void update(Collection<TestBean> testList) throws SQLException {
-		String sql = "UPDATE TEST SET TEST_NAME=?, TEST_IMAGE=? WHERE UIDPK=?";
+		String sql = UPDATE_QUERY;
 		DatabaseUtils.executeUpdateQuery(getConnection(), sql, testList, new TestStatementMapping());
 	}
 
