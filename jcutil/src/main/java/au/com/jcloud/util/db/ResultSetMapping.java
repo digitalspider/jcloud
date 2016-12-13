@@ -6,6 +6,8 @@ import java.sql.SQLException;
 /**
  * Map a ResultSet to an object.
  *
+ * See {@link DatabaseUtils}
+ *
  * @author davidv
  */
 public interface ResultSetMapping<T> {

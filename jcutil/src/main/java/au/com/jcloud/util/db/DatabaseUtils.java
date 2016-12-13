@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -19,6 +20,7 @@ import org.apache.log4j.Logger;
 public class DatabaseUtils {
 
 	private static Logger LOG = Logger.getLogger(DatabaseUtils.class);
+	private static final boolean CLOSE_CONNECTION = false;
 
 	/**
 	 * Close a Connection
@@ -104,7 +106,49 @@ public class DatabaseUtils {
 	 * See {@link #executeQuerySingle(Connection, String, ResultSetMapping, boolean, Object...)} with default closeConnection=false
 	 */
 	public static <T> T executeQuerySingle(Connection conn, String sql, ResultSetMapping<T> mapping, Object... params) throws SQLException {
-		return executeQuerySingle(conn, sql, mapping, false, params);
+		return executeQuerySingle(conn, sql, mapping, CLOSE_CONNECTION, params);
+	}
+
+	/**
+	 * See {@link #executeQueryList(Connection, String, ResultSetMapping, boolean, Object...)} with default closeConnection=false
+	 */
+	public static <T> List<T> executeQueryList(Connection conn, String sql, ResultSetMapping<T> mapping, Object... params) throws SQLException {
+		return executeQueryList(conn, sql, mapping, CLOSE_CONNECTION, params);
+	}
+
+	/**
+	 * See {@link #executeInsertQuery(Connection, String, boolean, Object...)} with default closeConnection=false
+	 */
+	public static long executeInsertQuery(Connection conn, String sql, Object... params) throws SQLException {
+		return executeInsertQuery(conn, sql, CLOSE_CONNECTION, params);
+	}
+
+	/**
+	 * See {@link #executeUpdateQuery(Connection, String, boolean, Object...)} with default closeConnection=false
+	 */
+	public static int executeUpdateQuery(Connection conn, String sql, Object... params) throws SQLException {
+		return executeUpdateQuery(conn, sql, CLOSE_CONNECTION, params);
+	}
+
+	/**
+	 * See {@link #executeInsertQuery(Connection, String, Object, StatementMapping, boolean)} with default closeConnection=false
+	 */
+	public static <T extends IdBeanIF> T executeInsertQuery(Connection conn, String sql, T object, StatementParameterMapping<T> mapping) throws SQLException {
+		return executeInsertQuery(conn, sql, object, mapping, CLOSE_CONNECTION);
+	}
+
+	/**
+	 * See {@link #executeUpdateQuery(Connection, String, Object, StatementMapping, boolean)} with default closeConnection=false
+	 */
+	public static <T extends IdBeanIF> int executeUpdateQuery(Connection conn, String sql, T object, StatementParameterMapping<T> mapping) throws SQLException {
+		return executeUpdateQuery(conn, sql, object, mapping, CLOSE_CONNECTION);
+	}
+
+	/**
+	 * See {@link #executeUpdateQuery(Connection, String, Collection, StatementMapping, boolean)} with default closeConnection=false
+	 */
+	public static <T extends IdBeanIF> void executeUpdateQuery(Connection conn, String sql, Collection<T> object, StatementParameterMapping<T> mapping) throws SQLException {
+		executeUpdateQuery(conn, sql, object, mapping, CLOSE_CONNECTION);
 	}
 
 	/**
@@ -118,7 +162,7 @@ public class DatabaseUtils {
 	 * @return
 	 * @throws SQLException
 	 */
-	public static <T> T executeQuerySingle(Connection conn, String sql, ResultSetMapping<T> mapping, boolean closeConnection, Object... params) throws SQLException {
+	static <T> T executeQuerySingle(Connection conn, String sql, ResultSetMapping<T> mapping, boolean closeConnection, Object... params) throws SQLException {
 		ResultSet rs = null;
 		PreparedStatement stmt = null;
 		T result = null;
@@ -142,13 +186,6 @@ public class DatabaseUtils {
 	}
 
 	/**
-	 * See {@link #executeQueryList(Connection, String, ResultSetMapping, boolean, Object...)} with default closeConnection=false
-	 */
-	public static <T> List<T> executeQueryList(Connection conn, String sql, ResultSetMapping<T> mapping, Object... params) throws SQLException {
-		return executeQueryList(conn, sql, mapping, false, params);
-	}
-
-	/**
 	 * Execute a SQL query and return a list of objects, using the method {@link ResultSetMapping#map(ResultSet)} to map each item.
 	 *
 	 * @param conn
@@ -159,10 +196,10 @@ public class DatabaseUtils {
 	 * @return
 	 * @throws SQLException
 	 */
-	public static <T> List<T> executeQueryList(Connection conn, String sql, ResultSetMapping<T> mapping, boolean closeConnection, Object... params) throws SQLException {
+	static <T> List<T> executeQueryList(Connection conn, String sql, ResultSetMapping<T> mapping, boolean closeConnection, Object... params) throws SQLException {
 		ResultSet rs = null;
 		PreparedStatement stmt = null;
-		List<T> resultList = new ArrayList<T>();
+		List<T> resultList = new ArrayList<>();
 		try {
 			stmt = conn.prepareStatement(sql);
 			int i = 0;
@@ -191,13 +228,6 @@ public class DatabaseUtils {
 	}
 
 	/**
-	 * See {@link #executeInsertQuery(Connection, String, boolean, Object...)} with default closeConnection=false
-	 */
-	public static long executeInsertQuery(Connection conn, String sql, Object... params) throws SQLException {
-		return executeInsertQuery(conn, sql, false, params);
-	}
-
-	/**
 	 * Execute an insert query with a given list of parameters and return the new id created
 	 *
 	 * @param conn
@@ -206,34 +236,28 @@ public class DatabaseUtils {
 	 * @param params
 	 * @throws SQLException
 	 */
-	public static long executeInsertQuery(Connection conn, String sql, boolean closeConnection, Object... params) throws SQLException {
+	static long executeInsertQuery(Connection conn, String sql, boolean closeConnection, Object... params) throws SQLException {
 		PreparedStatement stmt = null;
+		ResultSet rs = null;
 		long newId = 0;
 		try {
 			stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			int i=0;
+			int i = 0;
 			for (Object param : params) {
 				setStatementParameterByType(stmt, ++i, param);
 			}
 			stmt.executeUpdate();
-			ResultSet rs = stmt.getGeneratedKeys();
+			rs = stmt.getGeneratedKeys();
 			if (rs.next()) {
 				newId = rs.getLong(1);
 			}
 		} finally {
-			close(stmt, conn);
+			close(rs, stmt);
 			if (closeConnection) {
 				close(conn);
 			}
 		}
 		return newId;
-	}
-
-	/**
-	 * See {@link #executeUpdateQuery(Connection, String, boolean, Object...)} with default closeConnection=false
-	 */
-	public static <T> int executeUpdateQuery(Connection conn, String sql, Object... params) throws SQLException {
-		return executeUpdateQuery(conn, sql, false, params);
 	}
 
 	/**
@@ -246,12 +270,12 @@ public class DatabaseUtils {
 	 * @return
 	 * @throws SQLException
 	 */
-	public static <T> int executeUpdateQuery(Connection conn, String sql, boolean closeConnection, Object... params) throws SQLException {
+	static int executeUpdateQuery(Connection conn, String sql, boolean closeConnection, Object... params) throws SQLException {
 		PreparedStatement stmt = null;
 		int result = 0;
 		try {
 			stmt = conn.prepareStatement(sql);
-			int i=0;
+			int i = 0;
 			for (Object param : params) {
 				setStatementParameterByType(stmt, ++i, param);
 			}
@@ -263,6 +287,91 @@ public class DatabaseUtils {
 			}
 		}
 		return result;
+	}
+
+	/**
+	 * Execute an insert query, populating the Statement using a {@link StatementParameterMapping}
+	 *
+	 * @param conn
+	 * @param sql
+	 * @param object
+	 * @param mapping
+	 * @return
+	 * @throws SQLException
+	 */
+	static <T extends IdBeanIF> T executeInsertQuery(Connection conn, String sql, T object, StatementParameterMapping<T> mapping, boolean closeConnection) throws SQLException {
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			mapping.mapParams(object, stmt);
+			stmt.executeUpdate();
+			rs = stmt.getGeneratedKeys();
+			if (rs.next()) {
+				object.setId(rs.getLong(1));
+			}
+		} finally {
+			DatabaseUtils.close(rs, stmt);
+			if (closeConnection) {
+				DatabaseUtils.close(conn);
+			}
+		}
+		return object;
+	}
+
+	/**
+	 * Execute an update query on an object, populating the Statement using a {@link StatementParameterMapping}
+	 *
+	 * @param conn
+	 * @param sql
+	 * @param object
+	 * @param mapping
+	 * @return
+	 * @throws SQLException
+	 */
+	static <T extends IdBeanIF> int executeUpdateQuery(Connection conn, String sql, T object, StatementParameterMapping<T> mapping, boolean closeConnection) throws SQLException {
+		PreparedStatement stmt = null;
+		int result = 0;
+		try {
+			stmt = conn.prepareStatement(sql);
+			int index = mapping.mapParams(object, stmt);
+			stmt.setLong(index, object.getId());
+			result = stmt.executeUpdate();
+		} finally {
+			DatabaseUtils.close(stmt);
+			if (closeConnection) {
+				DatabaseUtils.close(conn);
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * Execute an update query on a collection of {@link IdBeanIF} objects, populating the Statement using a {@link StatementParameterMapping}
+	 *
+	 * @param conn
+	 * @param sql
+	 * @param objectList
+	 * @param mapping
+	 * @param closeConnection
+	 * @throws SQLException
+	 */
+	static <T extends IdBeanIF> void executeUpdateQuery(Connection conn, String sql, Collection<T> objectList, StatementParameterMapping<T> mapping, boolean closeConnection) throws SQLException {
+		PreparedStatement stmt = null;
+		try {
+			stmt = conn.prepareStatement(sql);
+			for (T object : objectList) {
+				int index = mapping.mapParams(object, stmt);
+				stmt.setLong(index, object.getId());
+				stmt.addBatch();
+			}
+			stmt.executeBatch();
+		} finally {
+			DatabaseUtils.close(stmt);
+			if (closeConnection) {
+				DatabaseUtils.close(conn);
+			}
+		}
 	}
 
 	/**
