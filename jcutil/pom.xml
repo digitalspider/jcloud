@@ -78,6 +78,18 @@
         </plugins>
     </build>
 
+	<!-- Required for MQTT -->
+	<repositories>
+		<repository>
+			<id>eclipse</id>
+			<url>https://repo.eclipse.org/content/groups/releases/</url>
+			<name>Eclipse Releases Repository</name>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+	</repositories>
+
 	<dependencies>
 		<!-- MQtt Client Library -->
 		<dependency>
