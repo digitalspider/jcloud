@@ -248,7 +248,7 @@ public class HttpClientUtils {
 	 * @param responseFailureClassType,
 	 *            the type of class to convert the response to if failed
 	 * @return the responseClassType object
-	 * @throws BooktopiaHttpException
+	 * @throws HttpClientException
 	 *             if the response is not "200 OK"
 	 */
 	public static <T, U> T executeHttpRequestForSuccess(HttpClient httpClient, String url, HttpUriRequest request,
@@ -294,7 +294,7 @@ public class HttpClientUtils {
 	 * @param response
 	 *            the HttpResponse from executing the above URL.
 	 * @return the responseClassType object
-	 * @throws BooktopiaHttpException
+	 * @throws HttpClientException
 	 *             if the response is not "200 OK"
 	 */
 	private static <T, U> T getSuccessResponse(String url, Class<T> responseSuccessClassType,
