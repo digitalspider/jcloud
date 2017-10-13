@@ -8,6 +8,12 @@
 	<name>jcloud website</name>
 	<url>http://jcloud.com.au</url>
 
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.6.RELEASE</version>
+    </parent>
+
 	<organization>
 		<name>JCloud</name>
 		<url>http://www.jcloud.com.au</url>
@@ -31,6 +37,8 @@
 	    <ebean.version>8.1.1</ebean.version>
 	    <jackson.xml.version>2.0.1</jackson.xml.version>
         <ebeanorm-enhancement.plugin.args>debug=1</ebeanorm-enhancement.plugin.args>
+		<handlebars.version>4.0.5</handlebars.version>
+		<handlebars.precompile.version>4.0.6</handlebars.precompile.version>
     </properties>
 	
     <build>
@@ -69,19 +77,11 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
-            <!-- 
-            <plugin>
-                <groupId>org.mortbay.jetty</groupId>
-                <artifactId>maven-jetty-plugin</artifactId>
-                <configuration>
-                    <connectors>
-                        <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
-                            <port>8888</port>
-                        </connector>
-                    </connectors>
-                </configuration>
-            </plugin>
-             -->
+			<!-- SpringBoot: Package as an executable jar/war -->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
         </plugins>
     </build>
 
@@ -103,6 +103,40 @@
 			<version>${jcloud.version}</version>
 		</dependency>
 		
+        <!-- Thymeleaf templates -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
+		<!-- Spring devtools -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+		<!-- jquery -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery</artifactId>
+            <version>2.2.4</version>
+        </dependency>
+
+		<!-- bootstrap -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>3.3.7</version>
+        </dependency>
+        
+		<!-- handlebars -->
+		<dependency>
+		    <groupId>org.webjars</groupId>
+		    <artifactId>handlebars</artifactId>
+		    <version>${handlebars.version}</version>
+		</dependency>
+
 		<!-- Stripes Framework -->
 		<dependency>
 			<groupId>net.sourceforge.stripes</groupId>
@@ -191,7 +225,19 @@
 			<version>1.10.19</version>
 			<scope>test</scope>
 		</dependency>
-	
+		<dependency>
+		    <groupId>org.powermock</groupId>
+		    <artifactId>powermock-api-mockito</artifactId>
+		    <version>1.6.6</version>
+		    <scope>test</scope>
+		</dependency>
+		<dependency>
+		    <groupId>org.powermock</groupId>
+		    <artifactId>powermock-module-junit4</artifactId>
+		    <version>1.6.6</version>
+		    <scope>test</scope>
+		</dependency>
+
 		<!-- Logging -->
 		<dependency>
 			<groupId>log4j</groupId>
