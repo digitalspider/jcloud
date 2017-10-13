@@ -77,10 +77,36 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
+
 			<!-- SpringBoot: Package as an executable jar/war -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			
+			<!-- Handlebars precomiler "handlebars:precompile" -->
+			<plugin>
+				<groupId>com.github.jknack</groupId>
+				<artifactId>handlebars-maven-plugin</artifactId>
+				<version>${handlebars.precompile.version}</version>
+				<executions>
+					<execution>
+						<id>precompile</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>precompile</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<output>${basedir}/src/main/resources/static/js/hbtemplates.js</output>
+					<prefix>${basedir}/src/main/resources/static/template/handlebars</prefix>
+					<suffix>.hbs</suffix>
+					<minimize>true</minimize>
+					<runtime></runtime>
+					<amd>false</amd>
+					<encoding>UTF-8</encoding>
+				</configuration>
 			</plugin>
         </plugins>
     </build>
